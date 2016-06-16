@@ -10,6 +10,11 @@ end
 
 # Page: Game details
 get '/games/:id' do
+  binding.pry
+  @game = Game.find(:id)
+  binding.pry
+  @stadium = Stadium.find(@game.stadium_id)
+
   erb :'games/show'
 end
 
@@ -30,5 +35,5 @@ end
 
 # Page: Custom Board
 get '/customboard' do
-  erb :'users/customeboard'
+  erb :'users/customboard'
 end
