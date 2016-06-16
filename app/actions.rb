@@ -28,7 +28,7 @@ get '/leaderboard' do
   erb :'users/leaderboard'
 end
 
-# Page: Custome Board
-get '/customeboard' do
+# Page: Custom Board
+get '/customboard' do
   erb :'users/customeboard'
 end
