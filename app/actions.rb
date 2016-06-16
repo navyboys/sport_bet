@@ -1,3 +1,9 @@
+helpers do
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+end
+
 # Homepage
 get '/' do
   redirect :'games'
@@ -28,7 +34,7 @@ get '/leaderboard' do
   erb :'users/leaderboard'
 end
 
-# Page: Custom Board
-get '/customboard' do
+# Page: Custome Board
+get '/customeboard' do
   erb :'users/customeboard'
 end
