@@ -40,6 +40,7 @@ get '/leaderboard' do
 end
 
 # Page: Custom Board
+
 get '/customboard' do
   erb :'users/customboard'
 end
