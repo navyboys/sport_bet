@@ -35,6 +35,6 @@ get '/leaderboard' do
 end
 
 # Page: Custome Board
-get '/customeboard' do
-  erb :'users/customeboard'
+get '/customboard' do
+  erb :'users/customboard'
 end
