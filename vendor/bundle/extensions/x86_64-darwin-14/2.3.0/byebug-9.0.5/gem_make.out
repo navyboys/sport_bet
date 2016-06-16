@@ -1,0 +1,19 @@
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/byebug-9.0.5/ext/byebug
+/usr/local/opt/ruby/bin/ruby -r ./siteconf20160616-46684-18b5wnk.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR="
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.bundle ./.gem.20160616-46684-c7q3wc/byebug
