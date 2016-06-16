@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616185222) do
+ActiveRecord::Schema.define(version: 20160616193515) do
 
   create_table "bets", force: :cascade do |t|
     t.integer  "points"
     t.integer  "result"
     t.integer  "user_id"
-    t.integer  "game_id"
+    t.integer  "game_team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "followings", force: :cascade do |t|
+    t.integer  "follower"
+    t.integer  "followee"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

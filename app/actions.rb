@@ -1,5 +1,29 @@
-# Homepage (Root path)
+# Homepage
 get '/' do
-  flash[:notice] = "You're welcome."
-  erb :index
+  redirect :'games'
+end
+
+# Page: Bet on a game
+get '/games' do
+  erb :'games/index'
+end
+
+# Creat a bet for a game
+post 'games/:id/bets' do
+  redirect :'games' # When saved successfully
+end
+
+# Page: My bets
+get '/bets' do
+  erb :'bets/index'
+end
+
+# Page: Leader board
+get '/leaderboard' do
+  erb :'users/leaderboard'
+end
+
+# Page: Custome Board
+get '/customeboard' do
+  erb :'users/customeboard'
 end
