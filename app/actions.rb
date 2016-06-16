@@ -8,6 +8,11 @@ get '/games' do
   erb :'games/index'
 end
 
+# Page: Game details
+get '/games/:id' do
+  erb :'games/show'
+end
+
 # Creat a bet for a game
 post 'games/:id/bets' do
   redirect :'games' # When saved successfully
