@@ -1,0 +1,8 @@
+/*Richard: Simple CSS used to generate table layout for '/games/index.erb'*/
+.rTable { display: table; }
+.rTableRow { display: table-row; }
+.rTableHeading { display: table-header-group; }
+.rTableBody { display: table-row-group; }
+.rTableFoot { display: table-footer-group; }
+.rTableCell, .rTableHead { display: table-cell; }
+/*Richard: CSS to be improved before finalized*/
