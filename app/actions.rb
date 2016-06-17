@@ -1,5 +1,6 @@
 helpers do
   def current_user
+    session[:user_id] = 1
     @current_user ||= User.find_by(id: session[:user_id])
   end
 end
@@ -26,6 +27,15 @@ end
 
 # Page: My bets
 get '/bets' do
+  @completed_bets = []
+  @upcoming_bets = []
+
+  my_bets = Bet.all.where(user: current_user)
+  my_bets.each do |bet|
+    @completed_bets << bet if bet.game.completed?
+    @upcoming_bets << bet
+  end
+
   erb :'bets/index'
 end
 
