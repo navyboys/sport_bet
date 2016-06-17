@@ -19,11 +19,7 @@ class Bet < ActiveRecord::Base
     end
   end
 
-  def show_datetime
-    game.datetime.strftime("%F %I:%M%p")
-  end
-
-  def show_game_result
+  def game_result
     "#{game.winner.team.name} (#{game.winner.score}) vs " +
     "#{game.loser.team.name} (#{game.loser.score})"
   end

@@ -3,6 +3,21 @@ helpers do
     session[:user_id] = 1
     @current_user ||= User.find_by(id: session[:user_id])
   end
+
+  def format_datetime(datetime)
+    datetime.strftime("%F %I:%M%p")
+  end
+
+  def show_game(game)
+    "#{game.teams.first.name} vs #{game.teams.last.name}"
+  end
+
+  def show_game_result(game)
+    if ['Final', 'InProgess'].include?(game.status)
+      "#{game.teams.first.name} vs " +
+      "#{game.teams.last.name}"
+    end
+  end
 end
 
 get '/' do

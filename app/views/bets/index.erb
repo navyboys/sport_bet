@@ -28,19 +28,23 @@
   <table class="table table-striped">
     <tr>
       <th>Date</th>
+      <th>Game</th>
       <th>Game Result</th>
-      <th>Bet Result</th>
+      <th>Your Team</th>
+      <th>Bet Points</th>
       <th>Action</th>
     </tr>
     <% @upcoming_bets.each do |bet| %>
       <tr>
-        <td><%= bet.show_datetime %></td>
-        <td><%= bet.show_game_result %></td>
-        <td><%= bet.show_bet_result %></td>
+        <td><%= format_datetime(bet.game.datetime) %></td>
+        <td><%= show_game(bet.game) %></td>
+        <td><%= show_game_result(bet.game) %></td>
+        <td><%= bet.team.name %></td>
+        <td><%= bet.points %></td>
         <td>
           <form action="/bets/<%= "#{bet.id}" %>" method="post">
-            <input type="hidden" name="_method" value="patch">
-            <input type="submit" value="Archive">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Delete">
           </form>
         </td>
       </tr>

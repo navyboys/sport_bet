@@ -6,26 +6,11 @@ class Game < ActiveRecord::Base
 
   belongs_to :stadium
 
+  # TODO: set_result_to_game_team ? 
   # TODO: before_save :resolve_bet
-  # TODO: before_save :set_result_to_game_team
 
   def completed?
     ['Final', 'Canceled'].include?(status)
-  end
-
-  def find_winner
-    first_team = game_teams.first
-    second_team = game_teams.last
-    return if first_team.result == 0
-
-    case first_team.result
-    when 1
-      [first_team, second_team]
-    when -1
-      [second_team, first_team]
-    else
-      ["Tie"]
-    end
   end
 
   def winner
@@ -46,12 +31,12 @@ class Game < ActiveRecord::Base
     bets.select { |bet| bet.game_team.result == 1  }.count
   end
 
-  def other_hand_count
-    my_result = current_user.game_team.result
+  def other_hand_count(bet)
+    my_result = bet.game_team.result
     0 unless my_result
     other_hand = (my_result == 1) ? -1 : 1
 
-    bets.select { |bet| bet.game_team.result == other_hand }.count
+    bet.game.bets.select { |b| b.game_team.result == other_hand }.count
   end
 
   def resolve_bet
@@ -64,7 +49,7 @@ class Game < ActiveRecord::Base
       if status == 'Canceled' ||                     # Game Canceled
         (status == 'Final' && bet_result == 0) ||    # Tie
         (status == 'Final' && other_hand_count == 0) # No one on the other hand
-        current_user.points += bet.points
+        bet.user.points += bet.points
       end
 
       # all poins in game pool divided by winner count back
