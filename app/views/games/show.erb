@@ -2,52 +2,56 @@
   <h3>Game details</h3>
 </div>
 
-<div>
-  <h1><strong><%= @game.stadium.name %></strong></h2>
-  <%teams = @game.game_teams%>
-  <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe?-->
-  <h3><%= @game.datetime %></h3> 
-</div>
-
-<div class="well">
-  <h3>Bets on this game</h3>
-</div>
-<div>
-  <% first_team_bets = @game.game_teams.first.bets %>
-  <% second_team_bets = @game.game_teams.last.bets %>
-  <% bets_points = first_team_bets.reduce(0) {|m, bet| bet.points + m} + second_team_bets.reduce(0) {|m, bet| bet.points + memo}%>
+<% if @game %>
   <div>
-    <h4>TOTAL POINTS: <%=bets_points%></h4>
-    <h4>NUMBER OF BETS:
-      <% if first_team_bets && second_team_bets%>
-        <%=first_team_bets.length + second_team_bets.length%>
+    <h1><strong><%= @game.stadium.try(:name) %></strong></h2>
+    <%teams = @game.game_teams%>
+    <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe? also, TODO: foolproof for nils-->
+    <h3><%= @game.datetime %></h3> 
+  </div>
+
+  <div class="well">
+    <h3>Bets on this game</h3>
+  </div>
+  <div>
+    <% first_team_bets = @game.game_teams.first.bets %>
+    <% second_team_bets = @game.game_teams.last.bets %>
+    <% bets_points = first_team_bets.reduce(0) {|m, bet| bet.points + m} + second_team_bets.reduce(0) {|m, bet| bet.points + memo}%>
+    <div>
+      <h4>TOTAL POINTS: <%=bets_points%></h4>
+      <h4>NUMBER OF BETS:
+        <% if first_team_bets && second_team_bets%>
+          <%=first_team_bets.length + second_team_bets.length%>
+        <% elsif first_team_bets %>
+          <%=first_team_bets.length %>
+        <%else%>
+          <%=second_team_bets.length%>
+        <%end%>
+      </h4>
+    </div>
+
+    <div>
+      <% all_team_bets = [] %>
+      <% if first_team_bets && second_team_bets %>
+        <% all_team_bets = first_team_bets + second_team_bets %>
       <% elsif first_team_bets %>
-        <%=first_team_bets.length %>
-      <%else%>
-        <%=second_team_bets.length%>
-      <%end%>
-    </h4>
+        <% all_team_bets = first_team_bets %>
+      <% else %>
+      <% all_team_bets = second_team_bets %>
+      <% end %>
+
+      <%all_team_bets.each do |bet| %>
+        <div>
+          <p>Username: <%= bet.user.username%></p>
+          <p>Team: <%= bet.game_team.team.name %></p>
+         <p>Bet amount: <%= bet.points %></p>
+         <hr>
+        </div>     
+      <% end %>
+    </div>
+
   </div>
 
-  <div>
-    <% all_team_bets = [] %>
-    <% if first_team_bets && second_team_bets %>
-      <% all_team_bets = first_team_bets + second_team_bets %>
-    <% elsif first_team_bets %>
-      <% all_team_bets = first_team_bets %>
-    <% else %>
-    <% all_team_bets = second_team_bets %>
-    <% end %>
-
-    <%all_team_bets.each do |bet| %>
-      <div>
-        <p>Username: <%= bet.user.username%></p>
-        <p>Team: <%= bet.game_team.team.name %></p>
-       <p>Bet amount: <%= bet.points %></p>
-       <hr>
-      </div>     
-    <% end %>
-  </div>
-
-</div>
-
+<% else %>
+  <h1><strong>GAME NOT FOUND</strong></h1>
+<% end %>
