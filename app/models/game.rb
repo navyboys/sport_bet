@@ -53,16 +53,19 @@ class Game < ActiveRecord::Base
       end
 
       # all poins in game pool divided by winner count back
-      # TODO: points shoold be divided by raitos
+      # TODO: points should be divided by ratios
       if status == 'Final' && bet_result == 1      # Won
         current_user.points += pool / winner_count
       end
     end
   end
 
-  def resolve_bet(winning_team)
+  def resolve_bet(winning_team) #assumes winning_team will be be <Team>, if nil it was a tie else they were the winning team
     if completed?
       return  # already did this book-keeping, don't redo it
+    end
+
+      
     end
     # figure out if we just refund points.  either no winner, or all bets on one side
   end
