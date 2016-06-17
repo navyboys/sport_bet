@@ -1,6 +1,38 @@
-# Homepage
+helpers do
+  def current_user
+    User.find(session[:user_id]) if session[:user_id]
+  end
+end
+
+#login
 get '/' do
-  redirect :'games'
+    redirect '/users/login'
+end
+
+get '/users/login' do
+  erb :'users/login'
+end
+
+post '/users/login' do
+  user = User.find_by(username: params[:username])
+  if user.password_hash == params[:password_hash]
+    session[:user_id] = user.id
+    redirect '/bets'
+  else
+    #TODO flash a message
+    redirect "/users/login"
+  end
+end
+
+#logout
+get "/users/logout" do
+  session.clear
+  redirect "/users/login"
+end
+#user profile
+
+get '/users/' do
+  erb :'users/index'
 end
 
 # Page: Bet on a game
