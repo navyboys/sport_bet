@@ -1,9 +1,10 @@
 class Bet < ActiveRecord::Base
+  has_one :game, through: :game_team
+  has_one :stadium, through: :game
+  has_one :team, through: :game_team
+
   belongs_to :user
   belongs_to :game_team
-
-  delegate :game, to: :game_team
-  delegate :team, to: :game_team
 
   def show_bet_result
     case result

@@ -1,0 +1,16 @@
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/bond-0.5.1/ext/readline_line_buffer
+/usr/local/opt/ruby/bin/ruby -r ./siteconf20160616-46684-1sm8q73.rb extconf.rb
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/bond-0.5.1/ext/readline_line_buffer
+make "DESTDIR=" clean
+make: *** No rule to make target `clean'.  Stop.
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/bond-0.5.1/ext/readline_line_buffer
+make "DESTDIR="
+echo "This is a dummy extension"
+This is a dummy extension
+
+current directory: /Users/Eve/lighthouse/midterm/sport_bet/vendor/bundle/gems/bond-0.5.1/ext/readline_line_buffer
+make "DESTDIR=" install
+echo "This is a dummy extension"
+This is a dummy extension

@@ -2,6 +2,8 @@ class Game < ActiveRecord::Base
   has_many :game_teams
   has_many :teams, through: :game_teams
   has_many :bets, through: :game_teams
+  has_many :users, through: :bets
+
   belongs_to :stadium
 
   # after_save :resolve_bet
