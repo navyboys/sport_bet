@@ -42,9 +42,9 @@ end
 
 # Page: Game details
 get '/games/:id' do
-  @game = Game.find params[:id].to_i
+  @game = Game.find(params[:id].to_i)
   erb :'games/show'
-  
+    
 end
 
 # Create a bet for a game
@@ -57,13 +57,21 @@ get '/bets' do
   @completed_bets = []
   @upcoming_bets = []
 
-  my_bets = Bet.all.where(user: current_user)
+  my_bets = Bet.all.where(user: current_user, archived: false)
   my_bets.each do |bet|
     @completed_bets << bet if bet.game.completed?
     @upcoming_bets << bet
   end
 
   erb :'bets/index'
+end
+
+# Archive a bet
+patch '/bets/:id' do
+  bet = Bet.find_by(params[:bet_id])
+  bet.archived = true
+  bet.save
+  redirect :'bets'
 end
 
 # Page: Leader board

@@ -7,7 +7,7 @@ class Bet < ActiveRecord::Base
   belongs_to :game_team
 
   def show_bet_result
-    case result
+    case game_team.result
     when 1
       'Won'
     when -1
