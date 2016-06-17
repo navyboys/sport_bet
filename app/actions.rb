@@ -57,7 +57,7 @@ get '/bets' do
   @completed_bets = []
   @upcoming_bets = []
 
-  my_bets = Bet.all.where(user: current_user)
+  my_bets = Bet.all.where(user: current_user, archived: false)
   my_bets.each do |bet|
     @completed_bets << bet if bet.game.completed?
     @upcoming_bets << bet
