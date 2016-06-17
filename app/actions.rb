@@ -17,8 +17,6 @@ end
 # Page: Game details
 get '/games/:id' do
   @game = Game.find params[:id].to_i
-  #@stadium = @game.stadium
-  #@game_teams = @game.game_teams
   erb :'games/show'
 end
 
