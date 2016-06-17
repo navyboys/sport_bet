@@ -4,7 +4,7 @@
 <% if @game.completed? %>
   <div>
     <h2>GAME OVER</h2>
-    <h2>THE <%=@game.find_winner%> WON </h2>
+    <h2>THE <%=@game.winner%> WON </h2>
     <hr>
   </div>
 <%end%>
@@ -13,7 +13,7 @@
     <h1><strong><%= @game.stadium.try(:name) %></strong></h2>
     <%teams = @game.game_teams%>
     <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe? also, TODO: foolproof for nils-->
-    <h3><%= @game.datetime %></h3> 
+    <h3><%= @game.datetime %></h3>
   </div>
   <div>
     <button href='#'>BET!</button>
@@ -25,10 +25,10 @@
     <div>
       <h4>TOTAL POINTS: <%=@game.pool%></h4>
       <h4>NUMBER OF BETS:
-        <%=@game.bets.try(:length)%> 
+        <%=@game.bets.try(:length)%>
       </h4>
     </div>
-  
+
     <div>
 
       <%@game.bets.each do |bet| %>
@@ -37,7 +37,7 @@
           <p>Team: <%= bet.team.name %></p>
          <p>Bet amount: <%= bet.points %></p>
          <hr>
-        </div>     
+        </div>
       <% end %>
     </div>
 
