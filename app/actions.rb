@@ -65,39 +65,6 @@ get '/games/:id' do
     erb :'page_not_found' 
   end
 end
-#----WILL BE REMOVED, JUST FOR TESTING----#
- 
- 
-get '/testing' do
-  @game = Game.find(1)
-# @game_scheduled = Game.new(status: 'Scheduled', datetime: DateTime.new(2016,5, 14, 2), league: 'MLB', stadium_id: 1) 
-# @game_in_progress = Game.new(status: 'InProgress', datetime: DateTime.new(2016,5, 14, 2), league: 'MLB', stadium_id: 1) 
-
-# @game_even_bets = Game.new(status: 'Final', datetime: DateTime.new(2016,5, 14, 2), league: 'MLB', stadium_id: 1) 
-
-# @game_one_side_bets = Game.new(status: 'Final', datetime: DateTime.new(2016,5, 14, 2), league: 'MLB', stadium_id: 1) 
-
-# @game_cancelled = Game.new(status: 'Final', datetime: DateTime.new(2016,5, 14, 2), league: 'MLB', stadium_id: 1) 
-
-# GameTeam.new(score: nil, result: nil, team_id: 1, game_id: @game_scheduled.id)
-# GameTeam.new(score: nil, result: nil, team_id: 2, game_id: @game_scheduled.id)
-
-# GameTeam.new(score: nil, result: nil, team_id: 1, game_id: @game_in_progress.id)
-# GameTeam.new(score: nil, result: nil, team_id: 2, game_id: @game_in_progress.id)
-# @games = [@game_even_bets, @game_one_side_bets, @game_cancelled]
-# @games.each do |game|
-#   game_team = GameTeam.new(score: 5, result: -1, team_id: 1, game_id: game.id)
-#   binding.pry
-#   Bet.new(points: 400, user_id: 1, game_team_id: game_team.id)
-#   game_team = GameTeam.new(score: 7, result: 1, team_id: 2, game_id: game.id)
-#   Bet.new(points: 500, user_id: 2, game_team_id: game_team.id)
-# end
-# 
- binding.pry
-end
- 
- 
-#------------------------------------------#
 # Create a bet for a game
 post 'games/:id/bets' do
   redirect :'games' # When saved successfully

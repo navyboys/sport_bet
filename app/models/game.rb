@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
   # TODO: before_save :resolve_bet
 
   def completed?
-    ['Final', 'Canceled'].include?(status)
+    ['Final'].include?(status) #change later 
   end
 
   def winner
@@ -27,8 +27,8 @@ class Game < ActiveRecord::Base
 
   def resolve_bet(winning_team) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
     return if completed?  # already did this book-keeping, don't redo it
-    
     if winning_team
+
       game_team_a = self.game_teams.first
       game_team_b = self.game_teams.last
       winning_game_team_id = game_team_a.team_id == winning_team.id ? game_team_a.id : game_team_b.id  
@@ -37,10 +37,11 @@ class Game < ActiveRecord::Base
       set_won_bets(winning_bets)
       losing_bets = self.bets.where.not(game_team_id: winning_game_team_id)
       set_lost_bets(losing_bets)
-    else
-      set_tied_bets
-    end
       self.status = 'Final' 
+    else 
+      set_tied_bets
+      self.status = 'Canceled' if self.game_teams.first.score.nil? 
+    end
       self.save!
     # figure out if we just refund points.  either no winner, or all bets on one side
   end
@@ -50,7 +51,7 @@ class Game < ActiveRecord::Base
   def set_won_bets(bets)
     winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}   
     bets.each do |bet|          #sets bet's profit_points
-      decimal_percentage = bet.points.to_f / winning_bet_pool.to_f
+      decimal_percentage = bet.points.to_f / winning_bet_pool.to_f #check math and decimal if time allows
       winnings = (pool * decimal_percentage).floor
       bet.profit_points = winnings
       bet.save!
