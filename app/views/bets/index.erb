@@ -1,6 +1,22 @@
 <div class="well">
-  <h3>Completed bets</h3>
+  <h3>Completed Bets</h3>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>Date</th>
+      <th>Game Result</th>
+      <th>Bet Result</th>
+      <th>Action</th>
+    </tr>
+    <% @completed_bets.each do |bet| %>
+      <tr>
+        <td><%= bet.show_datetime %></td>
+        <td><%= bet.show_game_result %></td>
+        <td><%= bet.show_bet_result %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
 <div class="well">
-  <h3>Upcoimng bets</h3>
+  <h3>Upcoimng Bets</h3>
 </div>
