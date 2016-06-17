@@ -26,37 +26,19 @@ class Game < ActiveRecord::Base
   end
 
   def resolve_bet(winning_team) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
-    if completed?
-      return  # already did this book-keeping, don't redo it
-    end
-
+    return if completed?  # already did this book-keeping, don't redo it
+    
     if winning_team
       game_team_a = self.game_teams.first
       game_team_b = self.game_teams.last
       winning_game_team_id = game_team_a.team_id == winning_team.id ? game_team_a.id : game_team_b.id  
+
       winning_bets = self.bets.where(game_team_id: winning_game_team_id) 
-      #binding.pry
+      set_won_bets(winning_bets)
       losing_bets = self.bets.where.not(game_team_id: winning_game_team_id)
-      winning_bet_pool = winning_bets.reduce(0) {|m, bet| m + bet.points}   
-      winning_bets.each do |bet|          #sets bet's profit_points
-        decimal_percentage = bet.points.to_f / winning_bet_pool.to_f
-        winnings = (pool * decimal_percentage).floor
-        bet.profit_points = winnings
-        bet.save!
-        bet.user.points += winnings  #sets user's points winnings from bet
-        bet.user.save!
-      end
-      losing_bets.each do |bet|
-        bet.profit_points = 0
-        bet.save!
-      end
+      set_lost_bets(losing_bets)
     else
-      self.bets.each do |bet|     #everyone gets their points back and 'profit points' are set to bet point amount
-        bet.profit_points = bet.points
-        bet.save!
-        bet.user.points = bet.points
-        bet.user.save!
-      end
+      set_tied_bets
     end
       self.status = 'Final' 
       self.save!
@@ -64,7 +46,34 @@ class Game < ActiveRecord::Base
   end
 
   private
-
+  
+  def set_won_bets(bets)
+    winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}   
+    bets.each do |bet|          #sets bet's profit_points
+      decimal_percentage = bet.points.to_f / winning_bet_pool.to_f
+      winnings = (pool * decimal_percentage).floor
+      bet.profit_points = winnings
+      bet.save!
+      bet.user.points += winnings  #sets user's points winnings from bet
+      bet.user.save!
+    end
+  end
+  
+  def set_lost_bets(bets)
+    bets.each do |bet|
+      bet.profit_points = 0
+      bet.save!
+    end
+  end
+  
+  def set_tied_bets
+    self.bets.each do |bet|     #everyone gets their points back and 'profit points' are set to bet point amount
+      bet.profit_points = bet.points
+      bet.save!
+      bet.user.points = bet.points
+      bet.user.save!
+    end
+  end
   def winner_count
     bets.select { |bet| bet.game_team.result == 1  }.count
   end
