@@ -66,6 +66,14 @@ get '/bets' do
   erb :'bets/index'
 end
 
+# Archive a bet
+patch '/bets/:id' do
+  bet = Bet.find_by(params[:bet_id])
+  bet.archived = true
+  bet.save
+  redirect :'bets'
+end
+
 # Page: Leader board
 get '/leaderboard' do
   erb :'users/leaderboard'
