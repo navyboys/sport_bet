@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617031143) do
+ActiveRecord::Schema.define(version: 20160617220143) do
 
   create_table "bets", force: :cascade do |t|
     t.integer  "points"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20160617031143) do
   end
 
   create_table "followings", force: :cascade do |t|
-    t.integer  "follower"
-    t.integer  "followee"
+    t.integer  "follower_id"
+    t.integer  "followee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
