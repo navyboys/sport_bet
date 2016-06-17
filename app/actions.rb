@@ -16,11 +16,9 @@ end
 
 # Page: Game details
 get '/games/:id' do
-  binding.pry
-  @game = Game.find(:id)
-  binding.pry
-  @stadium = Stadium.find(@game.stadium_id)
-
+  @game = Game.find params[:id].to_i
+  #@stadium = @game.stadium
+  #@game_teams = @game.game_teams
   erb :'games/show'
 end
 

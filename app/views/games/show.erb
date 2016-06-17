@@ -3,7 +3,10 @@
 </div>
 
 <div>
-  <h2></h2>
+  <h1><strong><%= @game.stadium.name %></strong></h2>
+  <%teams = @game.game_teams%>
+  <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe?-->
+  <h3><%= @game.datetime %></h3> 
 </div>
 
 <div class="well">
