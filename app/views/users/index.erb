@@ -1,0 +1,15 @@
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../../stylesheets/users_index.css">
+</head>
+
+
+<div><img src="http://images.clipartpanda.com/baseball-clipart-638378452b1d670d2ffc9127a1d33b25.jpg"/></div>
+
+<h1>Hello <%= current_user.username %></h1>
+
+
+<h2> You currently have <%= current_user.points%> points </h2>
+
+<h2> You have placed <%=current_user.bets.count %> bets </h2>
+
