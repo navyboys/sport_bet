@@ -44,7 +44,7 @@ end
 get '/games/:id' do
   @game = Game.find params[:id].to_i
   erb :'games/show'
-  
+
 end
 
 # Create a bet for a game
@@ -64,6 +64,14 @@ get '/bets' do
   end
 
   erb :'bets/index'
+end
+
+# Archive a bet
+patch '/bets/:id' do
+  bet = Bet.find_by(params[:bet_id])
+  bet.archived = true
+  bet.save
+  redirect :'bets'
 end
 
 # Page: Leader board
