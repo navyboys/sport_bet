@@ -22,7 +22,7 @@ class Game < ActiveRecord::Base
   end
 
   def pool
-    bets.sum(points)
+    bets.reduce(0) {|m, bet| m + bet.points}
   end
 
   private

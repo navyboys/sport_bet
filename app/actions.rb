@@ -57,9 +57,12 @@ end
 
 # Page: Game details
 get '/games/:id' do
-  @game = Game.find params[:id].to_i
-  @game_over = @game.try(:status) == 'Final'
-  erb :'games/show'
+  begin
+    @game = Game.find(params[:id].to_i)
+    erb :'games/show'
+  rescue ActiveRecord::RecordNotFound => @e    
+    erb :'page_not_found' 
+  end
 end
 
 # Create a bet for a game
@@ -106,12 +109,16 @@ require 'net/http'
 # require 'pry-byebug'
 require 'json'
 
-def get_api_data(required_data = nil)
-  # uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}")
-  uri = URI("https://api.fantasydata.net/mlb/v2/JSON/GamesByDate/#{required_data}")
-  uri.query = URI.encode_www_form({
-    })
-  # binding.pry
+def get_api_data(required_data, required_date = nil)
+  if required_date
+    uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}/#{required_date}")
+    uri.query = URI.encode_www_form({
+      })
+  else
+    uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}")
+    uri.query = URI.encode_www_form({
+      })
+  end
   request = Net::HTTP::Get.new(uri.request_uri)
   # Request headers
   request['Ocp-Apim-Subscription-Key'] = '8c4c7e5288df4abf8b8830ca64d548a3'
@@ -123,12 +130,7 @@ def get_api_data(required_data = nil)
   end
   return response.body
 end
-
-JSON.parse(get_api_data("GamesByDate"))
-# pp JSON.parse(get_api_data("CurrentSeason"))
-@api_response = JSON.parse(get_api_data("2016-JUN-15"))
-# JSON.parse(get_api_data("teams"))
-# binding.pry
-# puts "Stop"
-# CurrentSeason
-# 2015-SEP-01
+#Call API methods
+@api_response_games_by_date = JSON.parse(get_api_data("GamesByDate","2016-JUN-15"))
+@api_response_teams = JSON.parse(get_api_data("teams"))
+@api_response_stadia = JSON.parse(get_api_data("Stadiums"))
