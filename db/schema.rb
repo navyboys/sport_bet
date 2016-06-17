@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616194315) do
+ActiveRecord::Schema.define(version: 20160617025932) do
 
   create_table "bets", force: :cascade do |t|
     t.integer  "points"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160616194315) do
     t.integer  "game_team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "archived"
   end
 
   create_table "followings", force: :cascade do |t|
