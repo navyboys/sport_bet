@@ -14,8 +14,21 @@ helpers do
 
   def show_game_result(game)
     if ['Final', 'InProgess'].include?(game.status)
-      "#{game.teams.first.name} vs " +
-      "#{game.teams.last.name}"
+      "#{game.game_teams.first.score} : #{game.game_teams.last.score}"
+    end
+  end
+
+  def show_bet_result(bet)
+    bet.profit_points ||= 0
+    result = (bet.profit_points - bet.points).to_s
+
+    case bet.game_team.result
+    when 1
+      'Won ' + result + ' points'
+    when -1
+      'Lost ' + result + ' points'
+    when 0
+      "Tie: #{bet.points} returned back to your account."
     end
   end
 end
@@ -60,8 +73,8 @@ get '/games/:id' do
   begin
     @game = Game.find(params[:id].to_i)
     erb :'games/show'
-  rescue ActiveRecord::RecordNotFound => @e    
-    erb :'page_not_found' 
+  rescue ActiveRecord::RecordNotFound => @e
+    erb :'page_not_found'
   end
 end
 
@@ -77,8 +90,11 @@ get '/bets' do
 
   my_bets = Bet.all.where(user: current_user, archived: false)
   my_bets.each do |bet|
-    @completed_bets << bet if bet.game.completed?
-    @upcoming_bets << bet
+    if bet.game.completed?
+      @completed_bets << bet
+    else
+      @upcoming_bets << bet
+    end
   end
 
   erb :'bets/index'
@@ -86,10 +102,22 @@ end
 
 # Archive a bet
 patch '/bets/:id' do
-  bet = Bet.find_by(params[:bet_id])
+  bet = Bet.find(params[:id])
   bet.archived = true
   bet.save
   redirect :'bets'
+end
+
+# Delete a bet
+delete '/bets/:id' do
+  bet = Bet.find(params[:id])
+  bet.user.points += bet.points
+  if bet.destroy
+    bet.user.save
+    redirect :'bets'
+  else
+    flash[:error] = 'You bet cannot be deleted.'
+  end
 end
 
 # Page: Leader board

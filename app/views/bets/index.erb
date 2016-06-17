@@ -3,15 +3,21 @@
   <table class="table table-striped">
     <tr>
       <th>Date</th>
+      <th>Game</th>
       <th>Game Result</th>
       <th>Bet Result</th>
       <th>Action</th>
     </tr>
     <% @completed_bets.each do |bet| %>
       <tr>
-        <td><%= bet.show_datetime %></td>
-        <td><%= bet.show_game_result %></td>
-        <td><%= bet.show_bet_result %></td>
+        <td><%= format_datetime(bet.game.datetime) %></td>
+        <td>
+          <a href="/games/<%= "#{bet.game.id}" %>">
+            <%= show_game(bet.game) %>
+          </a>
+        </td>
+        <td><%= show_game_result(bet.game) %></td>
+        <td><%= show_bet_result(bet) %></td>
         <td>
           <form action="/bets/<%= "#{bet.id}" %>" method="post">
             <input type="hidden" name="_method" value="patch">
@@ -37,7 +43,11 @@
     <% @upcoming_bets.each do |bet| %>
       <tr>
         <td><%= format_datetime(bet.game.datetime) %></td>
-        <td><%= show_game(bet.game) %></td>
+        <td>
+          <a href="/games/<%= "#{bet.game.id}" %>">
+            <%= show_game(bet.game) %>
+          </a>
+        </td>
         <td><%= show_game_result(bet.game) %></td>
         <td><%= bet.team.name %></td>
         <td><%= bet.points %></td>
