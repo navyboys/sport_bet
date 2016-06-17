@@ -5,5 +5,4 @@ class Bet < ActiveRecord::Base
   has_one :stadium, through: :game
   has_one :team, through: :game_team
   
-
 end

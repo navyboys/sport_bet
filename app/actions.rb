@@ -42,7 +42,9 @@ end
 # Page: Game details
 get '/games/:id' do
   @game = Game.find params[:id].to_i
+  binding.pry
   erb :'games/show'
+  
 end
 
 # Creat a bet for a game

@@ -44,7 +44,7 @@
 
       <%all_team_bets.each do |bet| %>
         <div>
-          <p>Username: <%= bet.user.username%></p>
+          <p>Username: <%= bet.user.try(:username)%></p>
           <p>Team: <%= bet.game_team.team.name %></p>
          <p>Bet amount: <%= bet.points %></p>
          <hr>
