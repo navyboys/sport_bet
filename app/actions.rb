@@ -42,9 +42,12 @@ end
 
 # Page: Game details
 get '/games/:id' do
-  @game = Game.find(params[:id].to_i)
-  erb :'games/show'
-    
+  begin
+    @game = Game.find(params[:id].to_i)
+    erb :'games/show'
+  rescue ActiveRecord::RecordNotFound => @e    
+    erb :'page_not_found' 
+  end
 end
 
 # Create a bet for a game
