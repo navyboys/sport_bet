@@ -36,11 +36,11 @@ class Game < ActiveRecord::Base
     find_winner.last
   end
 
-  private
-
   def pool
     bets.reduce(0) { |sum, bet| sum += bet.points }
   end
+
+  private
 
   def winner_count
     bets.select { |bet| bet.game_team.result == 1  }.count

@@ -1,7 +1,6 @@
 <div class="well">
   <h3>Game details</h3>
 </div>
-
 <% if @game %>
   <div>
     <h1><strong><%= @game.stadium.try(:name) %></strong></h2>
@@ -16,36 +15,19 @@
     <h3>Bets on this game</h3>
   </div>
   <div>
-    <% first_team_bets = @game.game_teams.first.bets %>
-    <% second_team_bets = @game.game_teams.last.bets %>
-    <% bets_points = first_team_bets.reduce(0) {|m, bet| bet.points + m} + second_team_bets.reduce(0) {|m, bet| bet.points + memo}%>
     <div>
-      <h4>TOTAL POINTS: <%=bets_points%></h4>
+      <h4>TOTAL POINTS: <%=@game.pool%></h4>
       <h4>NUMBER OF BETS:
-        <% if first_team_bets && second_team_bets%>
-          <%=first_team_bets.length + second_team_bets.length%>
-        <% elsif first_team_bets %>
-          <%=first_team_bets.length %>
-        <%else%>
-          <%=second_team_bets.length%>
-        <%end%>
+        <%=@game.bets.try(:length)%> 
       </h4>
     </div>
   
     <div>
-      <% all_team_bets = [] %>
-      <% if first_team_bets && second_team_bets %>
-        <% all_team_bets = first_team_bets + second_team_bets %>
-      <% elsif first_team_bets %>
-        <% all_team_bets = first_team_bets %>
-      <% else %>
-      <% all_team_bets = second_team_bets %>
-      <% end %>
 
-      <%all_team_bets.each do |bet| %>
+      <%@game.bets.each do |bet| %>
         <div>
           <p>Username: <%= bet.user.try(:username)%></p>
-          <p>Team: <%= bet.game_team.team.name %></p>
+          <p>Team: <%= bet.team.name %></p>
          <p>Bet amount: <%= bet.points %></p>
          <hr>
         </div>     
