@@ -1,6 +1,13 @@
 <div class="well">
   <h3>Game details</h3>
 </div>
+<% if @game.completed? %>
+  <div>
+    <h2>GAME OVER</h2>
+    <h2>THE <%=@game.find_winner%> WON </h2>
+    <hr>
+  </div>
+<%end%>
 <% if @game %>
   <div>
     <h1><strong><%= @game.stadium.try(:name) %></strong></h2>

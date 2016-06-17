@@ -42,9 +42,9 @@ end
 
 # Page: Game details
 get '/games/:id' do
-  @game = Game.find params[:id].to_i
-  @game_over = @game.try(:status) == 'Final'
+  @game = Game.find(params[:id].to_i)
   erb :'games/show'
+    
 end
 
 # Create a bet for a game
