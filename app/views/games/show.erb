@@ -10,7 +10,7 @@
         TIED 
         <%=@game.game_teams.first.score%>-<%=@game.game_teams.first.score%>
       <% else %>
-        WINNER: THE <%=@city_name%> <%=@winning_team_name%> 
+        WINNER: THE <%#=@city_name%> <%=@winning_team_name%> 
       <% end %> 
     </h2>
     <h2><%=@game.game_teams.first.score%> - <%=@game.game_teams.last.score%></h2>
@@ -25,7 +25,7 @@
         <%= teams.first.team.name %> VS <%= teams.last.team.name %> - <%= @game.stadium.try(:name) %>
       </strong>
     </h2>
-    <h3><%= @game.datetime %></h3>
+    <h3><%= format_datetime(@game.datetime) %></h3>
     <h3>Status: <%= @game.status %></h3>
   </div>
 
@@ -41,16 +41,25 @@
       </h4>
     </div>
 
-    <div>
-
-      <%@game.bets.each do |bet| %>
-        <div>
-          <p>Username: <%= bet.user.try(:username)%></p>
-          <p>Team: <%= bet.team.name %></p>
-         <p>Bet amount: <%= bet.points %></p>
-         <hr>
-        </div>
+    <div class='well'>
+      <h3>Bets on Game</h3> 
+      <table class='table table-striped'>
+        <tr>
+          <th>Username</th>
+          <th>Team</th>
+          <th>Bet points</th>
+          <th>Date</th>
+        </tr>
+        <%@game.bets.each do |bet| %>
+          <div>
+            <td><%= bet.user.try(:username)%></td>
+            <td><%= bet.team.name %></td>
+            <td><%= bet.points %></td>
+            <td><%= format_datetime(bet.created_at) %></td>
+           <hr>
+          </div>
       <% end %>
+      </table>
     </div>
 
   </div>
