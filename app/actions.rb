@@ -34,8 +34,8 @@ helpers do
 
   def get_points
     profit = Bet.where(user_id = current_user.id).sum("profit_points")
-    wager = Bet.where(user_id = current_user.id).sum("points")
-    current_user.points.to_i + profit - wager
+    # wager = Bet.where(user_id = current_user.id).sum("points")
+    # current_user.points.to_i + profit - wager
   end
 end
 
