@@ -63,28 +63,13 @@ get '/users/' do
   erb :'users/index'
 end
 
-# Page: Bet on a game
+# Page: Show list of all games available for betting
 get '/games' do
   i = 0
-  @home_teams = []
-  @away_teams = []
-  @game_dates = []
-  @game_stadia_names = []
-  @game_stadia_cities = []
-
+  @game_to_bet_on = []
   for i in 1..100
-    @home_teams << GameTeam.where(game_id: i).first.team.name
-    #vs
-    @away_teams << GameTeam.where(game_id: i).second.team.name
-
-    #Date of game
-    @game_dates << GameTeam.where(game_id: i).first.game.datetime
-    #Find games on same day
-    #Game.where(datetime: "2016-04-11 19:10:00".to_datetime) - probably don't need this
-
-    #Stadium where game is played
-    @game_stadia_names << GameTeam.where(game_id: i).first.game.stadium.name
-    @game_stadia_cities << GameTeam.where(game_id: i).first.game.stadium.city
+    @game_to_bet_on << { home_team: GameTeam.where(game_id: i).first.team.name, away_team: GameTeam.where(game_id: i).second.team.name, game_date: GameTeam.where(game_id: i).first.game.datetime, game_stadium_name: GameTeam.where(game_id: i).first.game.stadium.name, game_stadium_city: GameTeam.where(game_id: i).first.game.stadium.city
+    }
   end
 
   erb :'games/index'
