@@ -45,10 +45,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li class="hvr-bounce-to-bottom"><a href="/" class="active">Home</a></li>
-                  <li class="hvr-bounce-to-bottom"><a href="/games">All Games</a></li>
+                  <li class="hvr-bounce-to-bottom"><a href="/games">Games</a></li>
                   <li><a href="/bets">My Bets</a></li>
                   <li><a href="/leaderboard">Leaderboard</a></li>
-                  <li><a href="/customboard" class="scroll">Friend Board</a></li>
                   <li><a href="/users/">Profile</a></li>
                   <% if current_user %>
                   <li><a href="/users/logout">Log Out</a></li>
@@ -62,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
     <div class="header-top">
         <div class="head-logo">
-          <h1><a href="/users/login">BettingBall </a></h1>
+          <h1><a href="/users/login">BBettr</a></h1>
         </div>
         <div class="top-nav">
           <div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
@@ -92,6 +91,60 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <% end %>
 
   <%= yield %>
+
+  <!-- footer -->
+    <div class="footer">
+      <!-- container-wrap -->
+      <div class="container-wrap">
+        <div class="footer-top">
+            <div class="footer-grids">
+              <div class="col-md-3 f-address">
+                <h5>Address</h5>
+                <ul>
+                  <li>128 W Hastings St #300,</li>
+                  <li>Vancouver, BC V6B 1G9</li>
+                  <li>Telephone: +1 888 569 6898</li>
+                  <li>FAX: +1 234 567 9871</li>
+                  <li>E-mail : <a href="mailto:hello@bbettr.com">hello@bbettr.com</a></li>
+                </ul>
+              </div>
+              <div class="col-md-3 f-address f-phone">
+                <h5>Phone</h5>
+                <div class="f-address-text">
+                  <p>+1 888 569 6898</p>
+                  <p>+1 604 789 3450</p>
+                </div>
+              </div>
+              <div class="col-md-6 f-address f-contact">
+                <h5>Receive Deals</h5>
+                <form>
+                  <input type="text" placeholder="Email address" required="">
+                  <input type="submit" value="Submit">
+                </form>
+              </div>
+              <div class="clearfix"> </div>
+            </div>
+            <div class="footer-bottom">
+              <div class="footer-nav">
+                <ul>
+                  <li><a href="index.html" class="active">Home</a></li>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/games">Games</a></li>
+                  <li><a href="/bets">My Bets</a></li>
+                  <li><a href="/leaderboard">Leaderboard</a></li>
+                  <li><a href="/users/">Profile</a></li>
+                </ul>
+              </div>
+              <div class="copyright">
+                <p> © 2015 B-Bettr . All rights reserved | Design by Richard, Max, Ben, & Natalia</a></p>
+              </div>
+              <div class="clearfix"> </div>
+            </div>
+        </div>
+      </div>
+      <!-- //container-wrap -->
+    </div>
+
 
   <!-- Bootstrap: Latest compiled and minified JavaScript -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
