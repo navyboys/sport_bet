@@ -39,10 +39,10 @@ class Game < ActiveRecord::Base
     winning_team = nil
     losing_team = nil
 
-    if game_team_a.score > game_team_b.score
+    if game_team_a.try(:score) > game_team_b.try(:score)
       winning_team = game_team_a
       losing_team =  game_team_b
-    elsif game_team_a.score < game_team_b.score
+    elsif game_team_a.try(:score) < game_team_b.try(:score)
       winning_team = game_team_b
       winning_team = game_team_a
     else
