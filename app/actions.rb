@@ -98,7 +98,7 @@ end
 # Create a bet for a game
 post '/games/:id/bets' do
   if params[:bet_points].to_i > current_user.points
-    flash[:error] = 'You have no enough points.'
+    flash[:error] = "Sorry, you don't have enough points."
     redirect back
   end
 
@@ -148,7 +148,7 @@ delete '/bets/:id' do
     bet.user.save
     redirect :'bets'
   else
-    flash[:error] = 'You bet cannot be deleted.'
+    flash[:error] = 'Your bet cannot be deleted.'
   end
 end
 
