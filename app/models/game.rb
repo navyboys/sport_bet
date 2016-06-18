@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
   belongs_to :stadium
 
   # TODO: set_result_to_game_team ? 
-  # TODO before_save :resolve_bet()
+  # TODO before_save :resolve_bet
 
   def completed?
     ['Final', 'Canceled'].include?(status) 
@@ -30,7 +30,8 @@ class Game < ActiveRecord::Base
   def tied?
     game_teams.first.score == game_teams.last.score 
   end
-  def resolve_bets #assumes winning_team will be be <Team>, if nil it was a tie else they were the winning team
+
+  def resolve_bets
     
     return if completed?  # already did this book-keeping, don't redo it
     
@@ -58,7 +59,6 @@ class Game < ActiveRecord::Base
     else 
       set_tied_bets
     end
-    # figure out if we just refund points.  either no winner, or all bets on one side
   end
 
   private
@@ -97,27 +97,6 @@ class Game < ActiveRecord::Base
 
     bet.game.bets.select { |b| b.game_team.result == other_hand }.count
   end
-
-# def resolve_bet
-#   return unless completed?
-
-#   bets.each do |bet|
-#     bet_result = bet.game_team.result
-
-#     # bet points back to user
-#     if status == 'Canceled' ||                     # Game Canceled
-#       (status == 'Final' && bet_result == 0) ||    # Tie
-#       (status == 'Final' && other_hand_count == 0) # No one on the other hand
-#       bet.user.points += bet.points
-#     end
-
-#     # all poins in game pool divided by winner count back
-#     # TODO: points should be divided by ratios
-#     if status == 'Final' && bet_result == 1      # Won
-#       current_user.points += pool / winner_count
-#     end
-#   end
-# end
 
   # TODO: When & where call this method?
   def cancel_game
