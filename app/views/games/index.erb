@@ -15,9 +15,10 @@
  </div>
 
  <!-- row data -->
-<a href="games/:id">
+
 <% i = 0 %>
 <% @game_to_bet_on.each do |game| %>
+<a href="games/<%= "#{@game[i].id}"%>">
  <% @home_team_image = "" %>
  <% case game[:home_team]
  when "Diamondbacks" %>
