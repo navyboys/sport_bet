@@ -97,7 +97,7 @@ get '/games/:id' do
 end
 # Create a bet for a game
 post '/games/:id/bets' do
-  if params[:bet_points].to_i > current_user.points
+  if params[:bet_points].to_i > get_points
     flash[:error] = "Sorry, you don't have enough points."
     redirect back
   end
@@ -106,8 +106,6 @@ post '/games/:id/bets' do
                     user: current_user,
                     game_team_id: params[:game_team_id])
   if new_bet.save
-    current_user.points -= params[:bet_points].to_i
-    current_user.save
     flash[:notice] = 'You bet successfully.'
   else
     flash[:error] = 'Error happens when you bet.'

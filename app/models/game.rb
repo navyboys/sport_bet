@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
 
   belongs_to :stadium
 
-  before_save :resolve_bets()
+  before_save :resolve_bets
 
   def completed?
     ['Final', 'Canceled'].include?(status)
@@ -82,17 +82,5 @@ class Game < ActiveRecord::Base
       bet.profit_points = bet.points
       bet.save!
     end
-  end
-
-  def winner_count
-    bets.select { |bet| bet.game_team.result == 1  }.count
-  end
-
-  def other_hand_count(bet)
-    my_result = bet.game_team.result
-    0 unless my_result
-    other_hand = (my_result == 1) ? -1 : 1
-
-    bet.game.bets.select { |b| b.game_team.result == other_hand }.count
   end
 end
