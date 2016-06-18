@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617031043) do
+ActiveRecord::Schema.define(version: 20160617220143) do
 
   create_table "bets", force: :cascade do |t|
     t.integer  "points"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20160617031043) do
     t.integer  "game_team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",     default: false
+    t.boolean  "archived",      default: false
+    t.integer  "profit_points"
   end
 
   create_table "followings", force: :cascade do |t|
-    t.integer  "follower"
-    t.integer  "followee"
+    t.integer  "follower_id"
+    t.integer  "followee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,6 +37,8 @@ ActiveRecord::Schema.define(version: 20160617031043) do
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "api_game_id"
+    t.integer  "api_team_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -45,6 +48,8 @@ ActiveRecord::Schema.define(version: 20160617031043) do
     t.integer  "stadium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "api_game_id"
+    t.integer  "api_stadium_id"
   end
 
   create_table "stadia", force: :cascade do |t|
@@ -52,12 +57,14 @@ ActiveRecord::Schema.define(version: 20160617031043) do
     t.string   "city"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "api_stadium_id"
   end
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "api_team_id"
   end
 
   create_table "users", force: :cascade do |t|
