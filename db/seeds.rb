@@ -65,6 +65,10 @@ short.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: 0, api_
 #sample Game population
 short.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
 
+#Populate games - will need this to get up to date game results
+# @api_response_games_by_date = JSON.parse(get_api_data("GamesByDate","2016-JUN-17"))
+# @api_response_games_by_date.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["Stadium"]) }
+
 #
 #Update team_id in game_teams table
 GameTeam.all.each do |gt|
