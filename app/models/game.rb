@@ -14,8 +14,9 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    @winner.name
-    #game_teams.where(result: [1, 0]).map { |gt| gt.team }.first
+    game_team_a = game_teams.first
+    game_team_b = game_teams.last
+    game_team_a.score > game_team_b.score ? game_team_a : game_team_b 
   end
 
   def loser
@@ -27,10 +28,9 @@ class Game < ActiveRecord::Base
   end
   
   def tied?
-    @winner == nil 
+    game_teams.first.score == game_teams.last.score 
   end
   def resolve_bets(winning_team, winscore, losescore) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
-    @winner = winning_team
     
     return if completed?  # already did this book-keeping, don't redo it
     game_team_a = self.game_teams.first

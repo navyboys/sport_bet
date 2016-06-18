@@ -94,6 +94,8 @@ end
 get '/games/:id' do
   begin
     @game = Game.find(params[:id].to_i)
+    @winning_team_name = @game.winner.team.name.upcase unless @game.tied?
+    @city_name = @game.stadium.city.upcase
     erb :'games/show'
   rescue ActiveRecord::RecordNotFound => @e
     erb :'page_not_found'

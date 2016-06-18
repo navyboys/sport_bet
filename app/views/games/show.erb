@@ -10,18 +10,23 @@
         TIED 
         <%=@game.game_teams.first.score%>-<%=@game.game_teams.first.score%>
       <% else %>
-        THE <%=@game.winner.name%> WON 
+        WINNER: THE <%=@city_name%> <%=@winning_team_name%> 
       <% end %> 
     </h2>
+    <h2><%=@game.game_teams.first.score%> - <%=@game.game_teams.last.score%></h2>
     <hr>
   </div>
 <%end%>
 <% if @game %>
   <div>
-    <h1><strong><%= @game.stadium.try(:name) %></strong></h2>
     <%teams = @game.game_teams%>
-    <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe? also, TODO: foolproof for nils-->
+    <h2>
+      <strong>
+        <%= teams.first.team.name %> VS <%= teams.last.team.name %> - <%= @game.stadium.try(:name) %>
+      </strong>
+    </h2>
     <h3><%= @game.datetime %></h3>
+    <h3>Status: <%= @game.status %></h3>
   </div>
 
   <% unless current_user.bet?(@game) %>
