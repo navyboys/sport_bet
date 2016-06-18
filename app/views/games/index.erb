@@ -16,6 +16,7 @@
 
  <!-- row data -->
 <a href="games/:id">
+<% i = 0 %>
 <% @game_to_bet_on.each do |game| %>
  <% @home_team_image = "" %>
  <% case game[:home_team]
@@ -144,15 +145,15 @@
  <% when "Nationals" %>
    <% @away_team_image = "was.gif" %>
  <% end %>
-
    <div class="rTableRow">
      <div class="rTableCell"><span style="display:inline-block; width: 100px;"><%= game[:game_date] %></span></div>
      <div class="rTableCell"><span style="display:inline-block; width: 150px;"><img src="/images/<%= "#{@home_team_image}"%>"/></div>
      <div class="rTableCell"><span style="display:inline-block; width: 150px;"><%= game[:home_team] %> vs <%= game[:away_team] %></div>
      <div class="rTableCell"><span style="display:inline-block; width: 150px;"><img src="/images/<%= "#{@away_team_image}"%>"/></div>
      <div class="rTableCell"><span style="display:inline-block; width: 200px;"><%= game[:stadium_name] %> &nbsp <%= game[:stadium_city] %></div>
-     <div class="rTableCell"><span style="display:inline-block; width: 40px;">"3"</div>
-     <div class="rTableCell"><span style="display:inline-block; width: 40px;">"2000"</div>
+     <div class="rTableCell"><span style="display:inline-block; width: 40px;"><%= @game[i].bets.count %></div>
+     <div class="rTableCell"><span style="display:inline-block; width: 40px;"><%= @game[i].pool %></div>
    </div>
+   <% i += 1 %>
  <% end %>
 </a>

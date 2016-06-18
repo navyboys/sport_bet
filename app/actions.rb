@@ -67,9 +67,11 @@ end
 get '/games' do
   i = 0
   @game_to_bet_on = []
+  @game = []
   for i in 1..100
     @game_to_bet_on << { home_team: GameTeam.where(game_id: i).first.team.name, away_team: GameTeam.where(game_id: i).second.team.name, game_date: GameTeam.where(game_id: i).first.game.datetime, game_stadium_name: GameTeam.where(game_id: i).first.game.stadium.name, game_stadium_city: GameTeam.where(game_id: i).first.game.stadium.city
     }
+    @game << Game.where(id: i).first
   end
 
   erb :'games/index'
