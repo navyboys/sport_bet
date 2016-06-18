@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
   belongs_to :stadium
 
   # TODO: set_result_to_game_team ? 
-  # TODO: before_save :resolve_bet
+  # TODO before_save :resolve_bet()
 
   def completed?
     ['Final', 'Canceled'].include?(status) 
@@ -30,7 +30,7 @@ class Game < ActiveRecord::Base
   def tied?
     game_teams.first.score == game_teams.last.score 
   end
-  def resolve_bets(winning_team, winscore, losescore) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
+  def resolve_bets(winning_team, winscore, losescore) #assumes winning_team will be be <Team>, if nil it was a tie else they were the winning team
     
     return if completed?  # already did this book-keeping, don't redo it
     game_team_a = self.game_teams.first
