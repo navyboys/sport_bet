@@ -3,8 +3,16 @@
 </div>
 <% if @game.completed? %>
   <div>
-    <h2>GAME OVER</h2>
-    <h2>THE <%=@game.winner%> WON </h2>
+    <h2>GAME IS OVER</h2>
+    
+    <h2>
+      <% if @game.tied? %>
+        TIED 
+        <%=@game.game_teams.first.score%>-<%=@game.game_teams.first.score%>
+      <% else %>
+        THE <%=@game.winner.name%> WON 
+      <% end %> 
+    </h2>
     <hr>
   </div>
 <%end%>
