@@ -82,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           <div class="social">
             <ul>
             <% if current_user %>
-              <li><a href= "/users/"><%= current_user.points %> pts - <%= current_user.username %></a></li>
+              <li><a href= "/users/"><h2 class= "natalia"><%= get_points %> pts - <%= current_user.username %></h2></a></li>
               <% end %>
             </ul>
           </div>

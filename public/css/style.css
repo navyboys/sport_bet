@@ -11,6 +11,30 @@ body a {
   -moz-transition: 0.5s all;
   -ms-transition: 0.5s all;
 }
+
+.natalia {
+    color: #5A5A5A;
+    margin: 2em 0 2em 0;
+    font-size: 1.1em;
+    line-height: 1.7em;
+    text-decoration: none;
+
+}
+
+.natalia_orange {
+    letter-spacing: 2px;
+    text-align: center;
+    color: #F25826;
+    margin: 0;
+    font-size: 3em;
+    font-family: 'Montserrat-Bold';
+    text-decoration: none;
+}
+
+a.natalia:hover {
+  text-decoration: none;
+}
+
 html, body{
 	font-family: 'OpenSans-Regular';
 	font-size: 100%;

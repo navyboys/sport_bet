@@ -3,6 +3,12 @@ helpers do
 
     @current_user ||= User.find_by(id: session[:user_id])
   end
+
+  def get_points
+    profit = Bet.where(user_id = current_user.id).sum("profit_points")
+    wager = Bet.where(user_id = current_user.id).sum("points")
+    current_user.points.to_i + profit - wager
+  end
 end
 
 get '/' do
