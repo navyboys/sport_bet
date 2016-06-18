@@ -126,7 +126,7 @@ get '/bets' do
 
   my_bets = Bet.all.where(user: current_user, archived: [false, nil])
   my_bets.each do |bet|
-    if bet.game.completed?
+    if bet && bet.game && bet.game.completed?
       @completed_bets << bet
     else
       @upcoming_bets << bet
