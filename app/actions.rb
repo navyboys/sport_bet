@@ -97,7 +97,9 @@ helpers do
       points_profit_won - points_loss
   end
 
-
+  def can_bet?(game)
+    game.can_bet? && !game.users.include?(current_user)
+  end
 end
 
 get '/' do

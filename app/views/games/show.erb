@@ -4,14 +4,14 @@
 <% if @game.completed? %>
   <div>
     <h2>GAME IS OVER</h2>
-    
+
     <h2>
       <% if @game.tied? %>
-        TIED 
+        TIED
         <%=@game.game_teams.first.score%>-<%=@game.game_teams.first.score%>
       <% else %>
-        WINNER: THE <%#=@city_name%> <%=@winning_team_name%> 
-      <% end %> 
+        WINNER: THE <%#=@city_name%> <%=@winning_team_name%>
+      <% end %>
     </h2>
     <h2><%=@game.game_teams.first.score%> - <%=@game.game_teams.last.score%></h2>
     <hr>
@@ -28,11 +28,9 @@
     <h3><%= format_datetime(@game.datetime) %></h3>
     <h3>Status: <%= @game.status %></h3>
   </div>
-
-  <% unless current_user.bet?(@game) %>
-    <%= erb :'bets/bet_modal' %>
-  <% end %>
-
+  <div>
+    <%= erb :'bets/bet_modal' if can_bet?(@game) %>
+  </div>
   <div>
     <div>
       <h4>TOTAL POINTS: <%=@game.pool%></h4>
@@ -42,7 +40,7 @@
     </div>
 
     <div class='well'>
-      <h3>Bets on Game</h3> 
+      <h3>Bets on Game</h3>
       <table class='table table-striped'>
         <tr>
           <th>Username</th>
