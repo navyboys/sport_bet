@@ -1,6 +1,6 @@
 helpers do
   def current_user
-    session[:user_id] = 1
+
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
@@ -31,6 +31,12 @@ helpers do
       "Tie: #{bet.points} returned back to your account."
     end
   end
+
+  def get_points
+    profit = Bet.where(user_id = current_user.id).sum("profit_points")
+    wager = Bet.where(user_id = current_user.id).sum("points")
+    current_user.points.to_i + profit - wager
+  end
 end
 
 get '/' do
@@ -45,7 +51,7 @@ post '/users/login' do
   user = User.find_by(username: params[:username])
   if user.password_hash == params[:password_hash]
     session[:user_id] = user.id
-    redirect '/bets'
+    redirect '/users/login'
   else
     #TODO flash a message
     redirect "/users/login"

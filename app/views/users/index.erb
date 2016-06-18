@@ -1,15 +1,25 @@
+    <!-- about-top -->
+    <div class="about-top">
+      <!-- container-wrap -->
+      <div class="container-wrap">
+        <div class="about-info">
+          <h2><%= current_user.username %></h2>
+        </div>
+        <div class="about-grids about-top-grids">
+            <div class="col-md-6 about-left">
+              <h2>Your Stats</h2>
+              <p>
+              You currently have <%= current_user.points%> points </p>
 
-<head>
-<link rel="stylesheet" type="text/css" href="../../../stylesheets/users_index.css">
-</head>
 
+              <p> You have placed <%=current_user.bets.count %> bets </p>
 
-<div><img src="http://images.clipartpanda.com/baseball-clipart-638378452b1d670d2ffc9127a1d33b25.jpg"/></div>
-
-<h1>Hello <%= current_user.username %></h1>
-
-
-<h2> You currently have <%= current_user.points%> points </h2>
-
-<h2> You have placed <%=current_user.bets.count %> bets </h2>
-
+            </div>
+            <div class="col-md-6 about-right">
+              <img src="../../images/2.png" alt="">
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+      </div>
+    </div>
+    <!-- about-top -->
