@@ -57,7 +57,7 @@ end
 #
 @api_response_games_by_date.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
 #
-@api_response_games_by_date.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
+@api_response_games_by_date.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
 #
 # #Update team_id in game_teams table
 GameTeam.all.each do |gt|
