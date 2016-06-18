@@ -79,6 +79,7 @@ end
 
 # Page: Game details
 get '/games/:id' do
+  # binding.pry
   begin
     @game = Game.find(params[:id].to_i)
     @winning_team_name = @game.winner.team.name.upcase unless @game.tied?
