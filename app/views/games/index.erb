@@ -10,6 +10,7 @@
     <th></th>
     <th>Bets</th>
     <th>Pool</th>
+    <th></th>
   </tr>
   <% i = 0 %>
   <% @game_to_bet_on.each do |game| %>
@@ -145,14 +146,18 @@
       <td><%= format_datetime(game[:game_date]) %></td>
       <td><img src="/images/<%= "#{@home_team_image}"%>"</td>
       <td>
-        <a href="games/<%= "#{@game[i].id}"%>">
+        <a href="games/<%= "#{@games_array[i].id}"%>">
           <%= game[:home_team] %> vs <%= game[:away_team] %>
         </a>
       </td>
       <td><img src="/images/<%= "#{@away_team_image}"%>"/></td>
       <td><%= game[:stadium_name] %> &nbsp <%= game[:stadium_city] %></td>
-      <td><%= @game[i].bets.count %></td>
-      <td><%= @game[i].pool %></td>
+      <td><%= @games_array[i].bets.count %></td>
+      <td><%= @games_array[i].pool %></td>
+      <% @game = Game.find(@games_array[i].id.to_i) %>
+      <td><%# unless current_user.bet?(@game) %>
+        <%= erb :'bets/bet_modal' %>
+     </td>
     </tr>
     <% i += 1 %>
   <% end %>
