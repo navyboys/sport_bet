@@ -8,12 +8,14 @@
         <div class="about-grids about-top-grids">
             <div class="col-md-6 about-left">
               <h2>Your Stats</h2>
-              <p>
-              You currently have <%= get_points %> points </p>
+              <p>Current points: <%= get_points %></p>
+              <p>Points pending game: <%=points_in_progress %></p>
 
+              <p> Total Bets: <%= bet_count %></p>
 
-              <p> You have placed <%=current_user.bets.count %> bets </p>
+              <p> In Progress Bets: <%= bet_in_progress %> </p>
 
+               <p> Completed Bets: <%= bet_completed %> </p>
             </div>
             <div class="col-md-6 about-right">
               <img src="../../images/2.png" alt="">
@@ -23,3 +25,59 @@
       </div>
     </div>
     <!-- about-top -->
+
+    <!-- about-top -->
+    <!-- about-team -->
+    <div class="about-team">
+      <!-- container-wrap -->
+      <div class="container-wrap">
+        <h4>Breakdown</h4>
+        <div class="team-grids">
+          <div class="col-md-3 team-grid">
+            <h6>Won Bets</h6>
+            <p>Number of bets: <%= bet_won %></p>
+              <p>------------------------</p>
+               <p>Total points placed: <%= points_invested_won %></p>
+               <p>------------------------</p>
+               <p>Total points gained: <%= points_gain_won %></p>
+               <p>------------------------</p>
+               <p>Total profit points: <%= points_profit_won %></p>
+          </div>
+          <div class="col-md-3 team-grid">
+
+            <h6>Lost Bets</h6>
+            <p>Number of bets: <%=bet_loss%></p>
+              <p>------------------------</p>
+               <p>Total points placed: <%= points_loss %></p>
+               <p>------------------------</p>
+               <p>Total points gained: 0</p>
+               <p>------------------------</p>
+               <p>Total profit points: <%=- points_loss %></p>
+          </div>
+          <div class="col-md-3 team-grid">
+            <h6>Tied Bets</h6>
+            <p>Number of bets: <%=bet_tie%></p>
+              <p>------------------------</p>
+               <p>Total points placed: <%= points_tie %></p>
+               <p>------------------------</p>
+               <p>Total points gained: <%= points_tie %></p>
+               <p>------------------------</p>
+               <p>Total profit points: 0</p>
+          </div>
+          <div class="col-md-3 team-grid">
+            <h6>Overall</h6>
+            <p>Number of bets: <%=bet_count%></p>
+              <p>------------------------</p>
+               <p>Total points placed: <%= points_total_placed %></p>
+               <p>------------------------</p>
+               <p>Total points gained: <%= points_total_gained %></p>
+               <p>------------------------</p>
+               <p>Total profit points: <%=point_total_profit%></p>
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+      </div>
+      <!-- //container-wrap -->
+    </div>
+    <!-- //about-team -->
+    <!-- about-bottom -->
