@@ -65,6 +65,28 @@ end
 
 # Page: Bet on a game
 get '/games' do
+  i = 0
+  @home_teams = []
+  @away_teams = []
+  @game_dates = []
+  @game_stadia_names = []
+  @game_stadia_cities = []
+
+  for i in 1..100
+    @home_teams << GameTeam.where(game_id: i).first.team.name
+    #vs
+    @away_teams << GameTeam.where(game_id: i).second.team.name
+
+    #Date of game
+    @game_dates << GameTeam.where(game_id: i).first.game.datetime
+    #Find games on same day
+    #Game.where(datetime: "2016-04-11 19:10:00".to_datetime) - probably don't need this
+
+    #Stadium where game is played
+    @game_stadia_names << GameTeam.where(game_id: i).first.game.stadium.name
+    @game_stadia_cities << GameTeam.where(game_id: i).first.game.stadium.city
+  end
+
   erb :'games/index'
 end
 
@@ -145,35 +167,3 @@ end
 get '/customboard' do
   erb :'users/customboard'
 end
-
-# ---------------------------------------------
-# To be removed - temporary API helper to seed tables
-require 'net/http'
-# require 'pry-byebug'
-require 'json'
-
-def get_api_data(required_data, required_date = nil)
-  if required_date
-    uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}/#{required_date}")
-    uri.query = URI.encode_www_form({
-      })
-  else
-    uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}")
-    uri.query = URI.encode_www_form({
-      })
-  end
-  request = Net::HTTP::Get.new(uri.request_uri)
-  # Request headers
-  request['Ocp-Apim-Subscription-Key'] = '8c4c7e5288df4abf8b8830ca64d548a3'
-  # Request body
-  request.body = "{body}"
-
-  response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      http.request(request)
-  end
-  return response.body
-end
-#Call API methods
-@api_response_games_by_date = JSON.parse(get_api_data("GamesByDate","2016-JUN-15"))
-@api_response_teams = JSON.parse(get_api_data("teams"))
-@api_response_stadia = JSON.parse(get_api_data("Stadiums"))
