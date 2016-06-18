@@ -12,6 +12,10 @@ class Game < ActiveRecord::Base
     ['Final', 'Canceled'].include?(status)
   end
 
+  def can_bet?
+    ['Scheduled', 'InProgress'].include?(status)
+  end
+
   def winner
     game_team_a = game_teams.first
     game_team_b = game_teams.last
