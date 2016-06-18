@@ -42,45 +42,49 @@ end
 @api_response_stadia.each do |stadium|
   Stadium.create(api_stadium_id: stadium["StadiumID"], name: stadium["Name"], city: stadium["City"])
 end
-
-
-#Populate teams
+#
+# #Populate teams
 @api_response_teams = JSON.parse(get_api_data("teams"))
 @api_response_teams.each do |team|
   Team.create(api_team_id: team["TeamID"], name: team["Name"])
 end
-
-#Populate game_teams and games
-file = File.read('season.json')
-#sample GameTeam population short is an array of hashes
-#populated as follows:
-file = File.read('season.json')
-season = JSON.parse(file)
-short = season[0..99]
-# Must run query twice: once for AwayTeam and once for HomeTeam
-short.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
-
-short.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
-
-#sample Game population
-short.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
-
-#Populate games - will need this to get up to date game results
-# @api_response_games_by_date = JSON.parse(get_api_data("GamesByDate","2016-JUN-17"))
-# @api_response_games_by_date.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["Stadium"]) }
-
 #
-#Update team_id in game_teams table
+# #Populate game_teams and games
+# #Populate games - will need this to get up to date game results
+@api_response_games_by_date = JSON.parse(get_api_data("GamesByDate","2016-JUN-18"))
+#
+@api_response_games_by_date.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
+#
+@api_response_games_by_date.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
+#
+@api_response_games_by_date.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
+#
+# #Update team_id in game_teams table
 GameTeam.all.each do |gt|
     gt.update(team_id: Team.find_by(api_team_id: gt.api_team_id).id)
 end
-
+#
 #Update stadium_id in games table
 Game.all.each do |game|
     game.update(stadium_id: Stadium.find_by(api_stadium_id: game.api_stadium_id).id)
 end
-
-#Update game_id in GameTeam
+#
+# #Update game_id in GameTeam
 GameTeam.all.each do |gt|
     gt.update(game_id: Game.find_by(api_game_id: gt.api_game_id).id)
 end
+#
+
+# file = File.read('season.json')
+#sample GameTeam population short is an array of hashes
+#populated as follows:
+# file = File.read('season.json')
+# season = JSON.parse(file)
+# short = season[0..99]
+# Must run query twice: once for AwayTeam and once for HomeTeam
+# short.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
+#
+# short.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: 0, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
+
+#sample Game population
+# short.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }

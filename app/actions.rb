@@ -70,11 +70,10 @@ end
 
 # Page: Show list of all games available for betting
 get '/games' do
-  # binding.pry
   i = 0
   @game_to_bet_on = []
   @games_array = []
-  for i in 1..100
+  for i in 1..15
     @game_to_bet_on << { home_team: GameTeam.where(game_id: i).first.team.name, away_team: GameTeam.where(game_id: i).second.team.name, game_date: GameTeam.where(game_id: i).first.game.datetime, game_stadium_name: GameTeam.where(game_id: i).first.game.stadium.name, game_stadium_city: GameTeam.where(game_id: i).first.game.stadium.city
     }
     @games_array << Game.where(id: i).first
