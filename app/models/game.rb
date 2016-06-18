@@ -75,8 +75,6 @@ class Game < ActiveRecord::Base
       winnings = (pool * decimal_percentage).floor
       bet.profit_points = winnings
       bet.save!
-      bet.user.points += winnings  #sets user's points winnings from bet
-      bet.user.save!
     end
   end
   
@@ -91,8 +89,6 @@ class Game < ActiveRecord::Base
     self.bets.each do |bet|     #everyone gets their points back and 'profit points' are set to bet point amount
       bet.profit_points = bet.points
       bet.save!
-      bet.user.points = bet.points
-      bet.user.save!
     end
   end
   def winner_count
