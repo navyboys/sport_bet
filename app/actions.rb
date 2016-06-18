@@ -72,7 +72,6 @@ end
 get '/games/:id' do
   begin
     @game = Game.find(params[:id].to_i)
-#    binding.pry
     erb :'games/show'
   rescue ActiveRecord::RecordNotFound => @e
     erb :'page_not_found'

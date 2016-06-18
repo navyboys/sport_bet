@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
   # TODO: before_save :resolve_bet
 
   def completed?
-    ['Final'].include?(status) #change later 
+    ['Final', 'Canceled'].include?(status) 
   end
 
   def winner
@@ -24,30 +24,48 @@ class Game < ActiveRecord::Base
   def pool
     bets.reduce(0) {|m, bet| m + bet.points}
   end
-
-  def resolve_bet(winning_team) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
+  
+  def tied?
+    game_teams.result == 0
+  end
+  def resolve_bet(winning_team, winscore, losescore) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
     return if completed?  # already did this book-keeping, don't redo it
+    game_team_a = self.game_teams.first
+    game_team_b = self.game_teams.last
     if winning_team
-
-      game_team_a = self.game_teams.first
-      game_team_b = self.game_teams.last
+      if game_team_a.team_id == winning_team.id
+        set_game_team_scores(game_team_a, game_team_b, winscore,losescore) 
+      else
+        set_game_team_scores(game_team_b, game_team_a, winscore,losescore) 
+      end
       winning_game_team_id = game_team_a.team_id == winning_team.id ? game_team_a.id : game_team_b.id  
 
       winning_bets = self.bets.where(game_team_id: winning_game_team_id) 
       set_won_bets(winning_bets)
       losing_bets = self.bets.where.not(game_team_id: winning_game_team_id)
       set_lost_bets(losing_bets)
-      self.status = 'Final' 
     else 
+      game_team_a.result = 0
+      game_team_a.save!
+      game_team_b.result = 0 
+      game_team_b.save!
       set_tied_bets
-      self.status = 'Canceled' if self.game_teams.first.score.nil? 
+#cancel status will not be implemented in this version      self.status = 'Canceled' if self.game_teams.first.score.nil? 
     end
+      self.status = 'Final' 
       self.save!
     # figure out if we just refund points.  either no winner, or all bets on one side
   end
 
   private
-  
+  def set_game_team_scores(wonteam, loseteam, winscore,losescore)
+      wonteam.result = 1
+      wonteam.score = winscore
+      wonteam.save!
+      loseteam.result = -1
+      loseteam.score = losescore
+      loseteam.save!
+  end
   def set_won_bets(bets)
     winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}   
     bets.each do |bet|          #sets bet's profit_points
