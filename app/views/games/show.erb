@@ -15,12 +15,11 @@
     <h2><%= teams.first.team.name %> VS <%= teams.last.team.name %></h2>     <!--Find a better way to do this maybe? also, TODO: foolproof for nils-->
     <h3><%= @game.datetime %></h3>
   </div>
-  <div>
-    <button href='#'>BET!</button>
-  </div>
-  <div class="well">
-    <h3>Bets on this game</h3>
-  </div>
+
+  <% unless current_user.bet?(@game) %>
+    <%= erb :'bets/bet_modal' %>
+  <% end %>
+
   <div>
     <div>
       <h4>TOTAL POINTS: <%=@game.pool%></h4>

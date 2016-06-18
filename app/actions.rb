@@ -79,8 +79,23 @@ get '/games/:id' do
   end
 end
 # Create a bet for a game
-post 'games/:id/bets' do
-  redirect :'games' # When saved successfully
+post '/games/:id/bets' do
+  if params[:bet_points].to_i > current_user.points
+    flash[:error] = 'You have no enough points.'
+    redirect back
+  end
+
+  new_bet = Bet.new(points: params[:bet_points],
+                    user: current_user,
+                    game_team_id: params[:game_team_id])
+  if new_bet.save
+    current_user.points -= params[:bet_points].to_i
+    current_user.save
+    flash[:notice] = 'You bet successfully.'
+  else
+    flash[:error] = 'Error happens when you bet.'
+  end
+  redirect back
 end
 
 # Page: My bets
@@ -88,7 +103,7 @@ get '/bets' do
   @completed_bets = []
   @upcoming_bets = []
 
-  my_bets = Bet.all.where(user: current_user, archived: false)
+  my_bets = Bet.all.where(user: current_user, archived: [false, nil])
   my_bets.each do |bet|
     if bet.game.completed?
       @completed_bets << bet
