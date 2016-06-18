@@ -9,6 +9,4 @@ class User < ActiveRecord::Base
   def bet?(game)
     game.users.include?(self)
   end
-
 end
-
