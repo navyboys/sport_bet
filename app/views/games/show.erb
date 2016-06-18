@@ -51,13 +51,12 @@
           <th>Date</th>
         </tr>
         <%@game.bets.each do |bet| %>
-          <div>
+          <tr>
             <td><%= bet.user.try(:username)%></td>
             <td><%= bet.team.name %></td>
             <td><%= bet.points %></td>
             <td><%= format_datetime(bet.created_at) %></td>
-           <hr>
-          </div>
+          </tr>
       <% end %>
       </table>
     </div>
