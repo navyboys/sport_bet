@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
   def tied?
     @winner == nil 
   end
-  def resolve_bet(winning_team, winscore, losescore) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
+  def resolve_bets(winning_team, winscore, losescore) #assumes winning_team will be be <Team> or is it <GameTeam>?, if nil it was a tie else they were the winning team
     @winner = winning_team
     
     return if completed?  # already did this book-keeping, don't redo it
@@ -42,7 +42,6 @@ class Game < ActiveRecord::Base
         set_game_team_scores(game_team_b, game_team_a, winscore,losescore) 
       end
       winning_game_team_id = game_team_a.team_id == winning_team.id ? game_team_a.id : game_team_b.id  
-
       winning_bets = self.bets.where(game_team_id: winning_game_team_id) 
       set_won_bets(winning_bets)
       losing_bets = self.bets.where.not(game_team_id: winning_game_team_id)
