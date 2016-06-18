@@ -155,8 +155,8 @@
       <td><%= @games_array[i].bets.count %></td>
       <td><%= @games_array[i].pool %></td>
       <% @game = Game.find(@games_array[i].id.to_i) %>
-      <td><%# unless current_user.bet?(@game) %>
-        <%= erb :'bets/bet_modal' %>
+      <td>
+        <% erb :'bets/bet_modal' if can_bet?(@game) %>
      </td>
     </tr>
     <% i += 1 %>

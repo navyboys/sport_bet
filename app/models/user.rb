@@ -5,8 +5,4 @@ class User < ActiveRecord::Base
   has_many :games, through: :game_teams
   has_many :stadia, through: :games
   has_many :teams, through: :game_teams
-
-  def bet?(game)
-    game.users.include?(self)
-  end
 end

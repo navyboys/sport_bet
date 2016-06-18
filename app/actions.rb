@@ -98,7 +98,7 @@ helpers do
   end
 
   def can_bet?(game)
-    !game.completed? && !game.users.include?(self)
+    !game.completed? && !game.users.include?(current_user)
   end
 end
 
