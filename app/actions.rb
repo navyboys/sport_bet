@@ -215,6 +215,7 @@ end
 
 # Page: Leader board
 get '/leaderboard' do
+  @top_users = User.all.sort_by { |user| user.final_points }.reverse.take(10)
   erb :'users/leaderboard'
 end
 

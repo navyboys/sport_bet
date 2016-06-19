@@ -5,4 +5,10 @@ class User < ActiveRecord::Base
   has_many :games, through: :game_teams
   has_many :stadia, through: :games
   has_many :teams, through: :game_teams
+
+  def final_points
+    profit = self.bets.sum("profit_points")
+    wager = self.bets.sum("points")
+    self.points.to_i + profit - wager
+  end
 end
