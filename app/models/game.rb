@@ -12,9 +12,9 @@ class Game < ActiveRecord::Base
     ['Final', 'Canceled'].include?(status)
   end
 
-  def can_bet?
+  def in_progress?
    ['Scheduled', 'InProgress'].include?(status)
- end
+  end
 
   def winner
     game_team_a = game_teams.first
@@ -77,6 +77,7 @@ class Game < ActiveRecord::Base
   end
 
   private
+
   def set_game_team_scores(wonteam, loseteam, winscore,losescore)
       wonteam.result = 1
       wonteam.score = winscore
@@ -84,7 +85,7 @@ class Game < ActiveRecord::Base
       loseteam.result = -1
       loseteam.score = losescore
       loseteam.save!
-   end
+  end
 
   def set_won_bets(bets)
     binding.pry
@@ -93,7 +94,9 @@ class Game < ActiveRecord::Base
       decimal_percentage = bet.points.to_f / winning_bet_pool.to_f #check math and decimal if time allows
       winnings = (pool * decimal_percentage).floor
       bet.profit_points = winnings
+      bet.user.points += winnings
       bet.save!
+      bet.user.save!
     end
   end
 
@@ -107,7 +110,9 @@ class Game < ActiveRecord::Base
   def set_tied_bets
     self.bets.each do |bet|     #everyone gets their points back and 'profit points' are set to bet point amount
       bet.profit_points = bet.points
+      bet.user.points += bet.points
       bet.save!
+      bet.user.save!
     end
   end
 end

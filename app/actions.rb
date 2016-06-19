@@ -57,7 +57,7 @@ helpers do
   end
 
   def bet_in_progress
-    profit = Bet.joins(:game_team).where("user_id = ? AND game_teams.result = ?", current_user.id, nil).count
+    Bet.joins(:game_team).where("user_id = ? AND game_teams.result = ?", current_user.id, nil).count
   end
 
   def bet_completed
@@ -101,7 +101,7 @@ helpers do
   end
 
   def can_bet?(game)
-    game.can_bet? && !game.users.include?(current_user)
+    game.in_progress? && !game.users.include?(current_user)
   end
 end
 
@@ -175,17 +175,23 @@ get '/games/:id' do
     erb :'page_not_found'
   end
 end
+
 # Create a bet for a game
 post '/games/:id/bets' do
-  if params[:bet_points].to_i > get_points
+  bet_points = params[:bet_points].to_i
+
+  if bet_points > current_user.points
     flash[:error] = "Sorry, you don't have enough points."
     redirect back
   end
 
-  new_bet = Bet.new(points: params[:bet_points],
+  new_bet = Bet.new(points: bet_points,
                     user: current_user,
-                    game_team_id: params[:game_team_id])
-  if new_bet.save
+                    game_team_id: params[:game_team_id].to_i)
+
+  current_user.points -= bet_points
+
+  if new_bet.save && current_user.save
     flash[:notice] = 'You bet successfully.'
   else
     flash[:error] = 'Error happens when you bet.'
@@ -221,22 +227,24 @@ end
 # Delete a bet
 delete '/bets/:id' do
   bet = Bet.find(params[:id])
-  if bet.destroy
+  current_user.points += bet.points
+
+  if bet.destroy && current_user.save
     flash[:notice] = 'Your canceled a bet successfully.'
   else
     flash[:error] = 'Your bet cannot be deleted.'
   end
+
   redirect :'bets'
 end
 
 # Page: Leader board
 get '/leaderboard' do
-  @top_users = User.all.sort_by { |user| user.final_points }.reverse.take(10)
+  @top_users = User.all.sort_by { |user| user.points }.reverse.take(10)
   erb :'users/leaderboard'
 end
 
 # Page: Custom Board
-
 get '/customboard' do
   erb :'users/customboard'
 end

@@ -8,33 +8,29 @@
         <div class="about-grids about-top-grids">
             <div class="col-md-6 about-left">
               <h2>Your Stats</h2>
-              <p>Current points: <%= get_points %></p>
-              <p>Points pending game: <%=points_in_progress %></p>
-
-              <p> Total Bets: <%= bet_count %></p>
-
-              <p> In Progress Bets: <%= bet_in_progress %> </p>
-
-               <p> Completed Bets: <%= bet_completed %> </p>
-
-               <p>
-                 <form action="/charge" method="POST">
-                   <script
-                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                     data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
-                     data-amount="2000"
-                     data-name="BBettr"
-                     data-description="Charge for your account."
-                     data-image="/images/2.png"
-                     data-locale="auto">
-                   </script>
-                 </form>
-               </p>
+              <p>Current points: <%= current_user.points %></p>
+              <p>Points pending game: <%= current_user.bet_points_in_progress %></p>
+              <p>Total Bets: <%= current_user.bet_count %></p>
+              <p>In Progress Bets: <%= current_user.bet_count_in_progress %> </p>
+              <p>Completed Bets: <%= current_user.bet_count_completed %> </p>
+              <p>
+                <form action="/charge" method="POST">
+                 <script
+                   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                   data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
+                   data-amount="2000"
+                   data-name="BBettr"
+                   data-description="Donate for Charity."
+                   data-image="/images/2.png"
+                   data-locale="auto">
+                 </script>
+                </form>
+              </p>
             </div>
             <div class="col-md-6 about-right">
               <img src="../../images/2.png" alt="">
             </div>
-            <div class="clearfix"> </div>
+          <div class="clearfix"> </div>
         </div>
       </div>
     </div>
@@ -42,9 +38,9 @@
 
     <!-- about-top -->
     <!-- about-team -->
-    <div class="about-team">
+    <!-- <div class="about-team"> -->
       <!-- container-wrap -->
-      <div class="container-wrap">
+      <!-- <div class="container-wrap">
         <h4>Breakdown</h4>
         <div class="team-grids">
           <div class="col-md-3 team-grid">
@@ -90,8 +86,8 @@
           </div>
           <div class="clearfix"> </div>
         </div>
-      </div>
+      </div> -->
       <!-- //container-wrap -->
-    </div>
+    <!-- </div> -->
     <!-- //about-team -->
     <!-- about-bottom -->

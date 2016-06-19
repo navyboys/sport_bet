@@ -6,9 +6,27 @@ class User < ActiveRecord::Base
   has_many :stadia, through: :games
   has_many :teams, through: :game_teams
 
-  def final_points
-    profit = self.bets.sum("profit_points")
-    wager = self.bets.sum("points")
-    self.points.to_i + profit - wager
+  def bet_count
+    self.bets.count
+  end
+
+  def bets_in_progress
+    self.game_teams.joins(:game).where("games.status IN ('Scheduled', 'InProgress')")
+  end
+
+  def bet_count_in_progress
+    bets_in_progress.count
+  end
+
+  def bet_points_in_progress
+    bets_in_progress.sum(:points)
+  end
+
+  def bets_completed
+    self.game_teams.joins(:game).where("games.status IN ('Final', 'Canceled')")
+  end
+
+  def bet_count_completed
+    bets_completed.count
   end
 end

@@ -71,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="header-right">
           <div class="natalia">
               <% if current_user %>
-                <a href= "/users/"><h2><%= get_points %> pts - <%= current_user.username %></h2></a>
+                <a href= "/users/"><h2><%= current_user.points %> pts - <%= current_user.username %></h2></a>
                 <% end %>
             </div>
           <div class="clearfix"> </div>
