@@ -1,9 +1,17 @@
-<div class="well">
-  <h3>Game details</h3>
-</div>
+<div class="about-top">
+<div class="main-content">
+<div class="about-top">
+
+<div class="about-info">
+  <h2>Game details</h2>
+  </div>
+  </div>
+  <div class="about-team">
+<div class="main-content align-c">
+
 <% if @game.completed? %>
   <div>
-    <h2>GAME IS OVER</h2>
+    <h4>GAME IS OVER</h4>
 
     <h2>
       <% if @game.tied? %>
@@ -33,14 +41,21 @@
   </div>
   <div>
     <div>
-      <h4>TOTAL POINTS: <%=@game.pool%></h4>
-      <h4>NUMBER OF BETS:
+      <h2>TOTAL POINTS: <%=@game.pool%></h2>
+      <h2>NUMBER OF BETS:
         <%=@game.bets.try(:length)%>
-      </h4>
+      </h1>
     </div>
+    </div>
+    </div>
+<div class="about-top">
 
-    <div class='well'>
-      <h3>Bets on Game</h3>
+<div class="about-info">
+      <h2>Bets on Game</h2>
+      </div>
+      </div>
+      <div class="about-team">
+<div class="main-content">
       <table class='table table-striped'>
         <tr>
           <th>Username</th>
@@ -64,3 +79,7 @@
 <% else %>
   <h1><strong>GAME NOT FOUND</strong></h1>
 <% end %>
+</div>
+</div>
+</div>
+</div>
