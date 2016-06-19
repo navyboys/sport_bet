@@ -19,7 +19,7 @@ helpers do
 
   def show_bet_result(bet)
     bet.profit_points ||= 0
-    result = (bet.profit_points - bet.points).to_s
+    result = (bet.profit_points - bet.points).abs.to_s
 
     case bet.game_team.result
     when 1

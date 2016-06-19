@@ -45,6 +45,9 @@ class Game < ActiveRecord::Base
     losescore = 0
 
     if game_team_a && game_team_b
+      game_team_a.score ||= 0
+      game_team_b.score ||= 0
+
       if game_team_a.score > game_team_b.score
         winning_team = game_team_a
         losing_team =  game_team_b
@@ -88,7 +91,6 @@ class Game < ActiveRecord::Base
   end
 
   def set_won_bets(bets)
-    binding.pry
     winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}
     bets.each do |bet|          #sets bet's profit_points
       decimal_percentage = bet.points.to_f / winning_bet_pool.to_f #check math and decimal if time allows
