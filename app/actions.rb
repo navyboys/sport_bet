@@ -204,13 +204,12 @@ end
 # Delete a bet
 delete '/bets/:id' do
   bet = Bet.find(params[:id])
-  bet.user.points += bet.points
   if bet.destroy
-    bet.user.save
-    redirect :'bets'
+    flash[:notice] = 'Your canceled a bet successfully.'
   else
     flash[:error] = 'Your bet cannot be deleted.'
   end
+  redirect :'bets'
 end
 
 # Page: Leader board
