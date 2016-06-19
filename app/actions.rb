@@ -155,7 +155,8 @@ get '/games' do
   @game_to_bet_on = []
   @games_array = []
   for i in Game.first.id..Game.last.id
-    @game_to_bet_on << { home_team: GameTeam.where(game_id: i).first.team.name, away_team: GameTeam.where(game_id: i).second.team.name, game_date: GameTeam.where(game_id: i).first.game.datetime, game_stadium_name: GameTeam.where(game_id: i).first.game.stadium.name, game_stadium_city: GameTeam.where(game_id: i).first.game.stadium.city
+    current_gt = GameTeam.where(game_id: i)
+    @game_to_bet_on << { home_team: current_gt.first.team.name, home_team_score: current_gt.first.score, away_team: current_gt.second.team.name, away_team_score: current_gt.second.score, game_date: current_gt.first.game.datetime, game_stadium_name: current_gt.first.game.stadium.name, game_stadium_city: current_gt.first.game.stadium.city
     }
     @games_array << Game.where(id: i).first
   end
