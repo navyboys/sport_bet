@@ -115,11 +115,11 @@ end
 
 post '/users/login' do
   user = User.find_by(username: params[:username])
-  if user.password_hash == params[:password_hash]
+  if user && user.password_hash == params[:password_hash]
     session[:user_id] = user.id
-    redirect '/users/login'
+    redirect '/games'
   else
-    #TODO flash a message
+    flash[:error] = "Your username and password does not match."
     redirect "/users/login"
   end
 end
