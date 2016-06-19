@@ -69,18 +69,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           </div>
         </div>
         <div class="header-right">
-          <form action="/charge" method="POST">
-            <script
-              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
-              data-amount="2000"
-              data-name="BBettr"
-              data-description="Charge for your account."
-              data-image="/images/2.png"
-              data-locale="auto">
-            </script>
-          </form>
-
           <div class="natalia">
               <% if current_user %>
                 <a href= "/users/"><h2><%= get_points %> pts - <%= current_user.username %></h2></a>

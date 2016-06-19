@@ -143,7 +143,7 @@ post '/charge' do
   current_user.points += 2000
   current_user.save!
   flash[:notice] = "You charged 2000 points into your account."
-  redirect :'/games'
+  redirect back
 end
 
 # Page: Show list of all games available for betting
