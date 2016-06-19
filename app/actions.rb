@@ -299,8 +299,8 @@ get '/admin/seed' do
   #Get game data
   @api_response_games_by_date_day_one = JSON.parse(get_api_data("GamesByDate","2016-JUN-19"))
   @api_response_games_by_date_day_two = JSON.parse(get_api_data("GamesByDate","2016-JUN-20"))
-  file_var = File.open("sunday_games.json","w")
-  file_var.write(@api_response_games_by_date_day_one)
+  # file_var = File.open("sunday_games.json","w")
+  # file_var.write(@api_response_games_by_date_day_one)
   #Populate games table
   @api_response_games_by_date_day_one.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
   @api_response_games_by_date_day_two.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
