@@ -60,19 +60,13 @@ end
 @api_response_games_by_date.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
 #
 # #Update team_id in game_teams table
-GameTeam.all.each do |gt|
-    gt.update(team_id: Team.find_by(api_team_id: gt.api_team_id).id)
-end
+GameTeam.all.each { |gt| gt.update(team_id: Team.find_by(api_team_id:gt.api_team_id).id) }
 #
 #Update stadium_id in games table
-Game.all.each do |game|
-    game.update(stadium_id: Stadium.find_by(api_stadium_id: game.api_stadium_id).id)
-end
+Game.all.each { |game| game.update(stadium_id: Stadium.find_by(api_stadium_id: game.api_stadium_id).id) }
 #
 # #Update game_id in GameTeam
-GameTeam.all.each do |gt|
-    gt.update(game_id: Game.find_by(api_game_id: gt.api_game_id).id)
-end
+GameTeam.all.each { |gt| gt.update(game_id: Game.find_by(api_game_id: gt.api_game_id).id) }
 #
 
 # file = File.read('season.json')
