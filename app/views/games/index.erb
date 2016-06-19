@@ -155,9 +155,45 @@
       <td><%= @games_array[i].bets.count %></td>
       <td><%= @games_array[i].pool %></td>
       <% @game = Game.find(@games_array[i].id.to_i) %>
-      <td>
-        <%= erb :'bets/bet_modal' if can_bet?(@game) %>
-     </td>
+
+      <td><%# unless current_user.bet?(@game) %>
+        <div>
+          <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#<%=i%>">
+            Bet
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="<%=i%>" tabindex="-1" role="dialog" aria-labelledby="betLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="betLabel">Bet on the game</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-inline" action="/games/<%= "#{@game.id}/bets" %>" method="post">
+                    <div class="form-group">
+                      <label for="team">Team</label>
+                      <select class="form-control" name="game_team_id">
+                        <% @game.game_teams.each do |gt| %>
+
+                          <option value="<%= %>"><%= gt.team.name %></option>
+                        <% end %>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Points</label>
+                      <input type="text" class="form-control" name="bet_points">
+                    </div>
+                    <button type="submit" class="btn btn-success">Bet</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </td>
+>>>>>>> rich/fix_modal
     </tr>
     <% i += 1 %>
   <% end %>
