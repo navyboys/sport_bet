@@ -240,3 +240,69 @@ end
 get '/customboard' do
   erb :'users/customboard'
 end
+
+# Page: update db with new seed data
+get '/admin' do
+  #Get API data
+  def get_api_data(required_data, required_date = nil)
+    if required_date
+      uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}/#{required_date}")
+      uri.query = URI.encode_www_form({
+        })
+    else
+      uri = URI("https://api.fantasydata.net/mlb/v2/JSON/#{required_data}")
+      uri.query = URI.encode_www_form({
+        })
+    end
+    request = Net::HTTP::Get.new(uri.request_uri)
+    # Request headers
+    request['Ocp-Apim-Subscription-Key'] = '8c4c7e5288df4abf8b8830ca64d548a3'
+    # Request body
+    request.body = "{body}"
+
+    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+        http.request(request)
+    end
+    return response.body
+  end
+  #Get stadium data
+  @api_response_stadia = JSON.parse(get_api_data("Stadiums"))
+  #Populate stadia table
+  @api_response_stadia.each do |stadium|
+    Stadium.create(api_stadium_id: stadium["StadiumID"], name: stadium["Name"], city: stadium["City"])
+  end
+  #Get team data
+  @api_response_teams = JSON.parse(get_api_data("teams"))
+  #Populate teams table
+  @api_response_teams.each do |team|
+    Team.create(api_team_id: team["TeamID"], name: team["Name"])
+  end
+  #Get game data
+  @api_response_games_by_date_day_one = JSON.parse(get_api_data("GamesByDate","2016-JUN-18"))
+  @api_response_games_by_date_day_two = JSON.parse(get_api_data("GamesByDate","2016-JUN-19"))
+  #Populate games table
+  @api_response_games_by_date_day_one.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
+  @api_response_games_by_date_day_two.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
+  #Populate game_teams table
+  #Day one
+  @api_response_games_by_date_day_one.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
+  #
+  @api_response_games_by_date_day_one.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
+  #Day two
+  @api_response_games_by_date_day_two.each { |game| GameTeam.create(score: game["AwayTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["AwayTeamID"]) }
+  #
+  @api_response_games_by_date_day_two.each { |game| GameTeam.create(score: game["HomeTeamRuns"], result: nil, api_game_id: game["GameID"], api_team_id: game["HomeTeamID"]) }
+
+  #Update all local id fields
+  # #Update team_id in game_teams table
+  GameTeam.all.each { |gt| gt.update(team_id: Team.find_by(api_team_id:gt.api_team_id).id) }
+  #
+  #Update stadium_id in games table
+  Game.all.each { |game| game.update(stadium_id: Stadium.find_by(api_stadium_id: game.api_stadium_id).id) }
+  #
+  # #Update game_id in GameTeam
+  GameTeam.all.each { |gt| gt.update(game_id: Game.find_by(api_game_id: gt.api_game_id).id) }
+
+  erb :'/admin/index'
+
+end
