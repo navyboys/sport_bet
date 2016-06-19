@@ -1,0 +1,72 @@
+<H1>Admin page</H1>
+<H2>Stadium data</H2>
+<div class="about-team">
+  <div class="main-content">
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+      </tr>
+      <% Stadium.all.each do |stadium| %>
+        <tr>
+          <td><%= stadium.name %></td>
+          <td><%= stadium.city %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<H2>Team data</H2>
+<div class="about-team">
+  <div class="main-content">
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+      </tr>
+      <% Team.all.each do |team| %>
+        <tr>
+          <td><%= team.name %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<H2>Game data</H2>
+<div class="about-team">
+  <div class="main-content">
+    <table class="table table-striped">
+      <tr>
+        <th>Local ID</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+      <% Game.all.each do |game| %>
+        <tr>
+          <td><%= game.id %> </td>
+          <td><%= game.status %></td>
+          <td><%= game.datetime %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<H2>GameTeam data</H2>
+<div class="about-team">
+  <div class="main-content">
+    <table class="table table-striped">
+      <tr>
+        <th>Local ID</th>
+        <th>TeamID</th>
+        <th>GameID</th>
+      </tr>
+      <% GameTeam.all.each do |gt| %>
+        <tr>
+          <td><%= gt.id %> </td>
+          <td><%= gt.team_id %></td>
+          <td><%= gt.game_id %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
