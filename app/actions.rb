@@ -132,6 +132,20 @@ get '/users/' do
   erb :'users/index'
 end
 
+# Charge with credit card
+post '/charge' do
+  Stripe.api_key = 'sk_test_yENZrfNUuVXFshfe9yOkatfu'
+  StripeWrapper::Charge.create(
+    card:        params[:stripeToken],
+    amount:      2000,
+    description: "BBettr user: #{current_user.email}"
+  )
+  current_user.points += 2000
+  current_user.save!
+  flash[:notice] = "You charged 2000 points into your account."
+  redirect :'/games'
+end
+
 # Page: Show list of all games available for betting
 get '/games' do
   i = 0

@@ -7,6 +7,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
 gem 'sinatra-flash'
+gem 'stripe'
 
 gem 'puma'
 gem 'tux'

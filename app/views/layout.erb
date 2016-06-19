@@ -13,12 +13,12 @@
   <!-- Bootstrap: Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-  
+
 
 <title>Baseball a Sports Category Flat bootstrap responsive Website Template | Home :: w3layouts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Baseball Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+<meta name="keywords" content="Baseball Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
@@ -52,7 +52,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <% if current_user %>
                   <li><a href="/users/logout">Log Out</a></li>
                   <% end %>
-                </ul> 
+                </ul>
                 <div class="clearfix"> </div>
               </div>
           </nav>
@@ -66,9 +66,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="top-nav">
           <div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
             <a href="#"><img src="../../images/menu.png" alt=""></a>
-          </div>  
+          </div>
         </div>
         <div class="header-right">
+
+          <form action="/charge" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
+              data-amount="2000"
+              data-name="BBettr"
+              data-description="Charge for your account."
+              data-image="/images/2.png"
+              data-locale="auto">
+            </script>
+          </form>
+
           <div class="social">
             <ul>
             <% if current_user %>
@@ -77,7 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </ul>
           </div>
           <div class="clearfix"> </div>
-        </div>        
+        </div>
         <div class="clearfix"> </div>
     </div>
   </div>
@@ -149,7 +162,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <!-- Bootstrap: Latest compiled and minified JavaScript -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
-  
+
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 
