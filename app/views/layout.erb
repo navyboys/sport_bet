@@ -15,7 +15,7 @@
 
 
 
-<title>Baseball a Sports Category Flat bootstrap responsive Website Template | Home :: w3layouts</title>
+<title>Baseball</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Baseball Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
@@ -44,12 +44,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           <nav class="pull">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <li class="hvr-bounce-to-bottom"><a href="/" class="active">Home</a></li>
+                  <li class="hvr-bounce-to-bottom"><a href="/" class="active" >Home</a></li>
                   <li class="hvr-bounce-to-bottom"><a href="/games">Games</a></li>
-                  <li><a href="/bets">My Bets</a></li>
                   <li><a href="/leaderboard">Leaderboard</a></li>
-                  <li><a href="/users/">Profile</a></li>
                   <% if current_user %>
+                  <li><a href="/bets">Bets</a></li>
+
+                    <li><a href="/users/">Profile</a></li>
                   <li><a href="/users/logout">Log Out</a></li>
                   <% end %>
                 </ul>
@@ -59,26 +60,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
       </div>
     </div>
-    <div class="header-top">
+        <div class="header-top">
         <div class="head-logo">
           <h1><a href="/users/login">BBettr</a></h1>
         </div>
         <div class="top-nav">
           <div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
-            <a href="#"><img src="../../images/menu.png" alt=""></a>
-          </div>
+            <a href="#"><img src="/../../images/menu.png" alt=""></a>
+          </div>  
         </div>
         <div class="header-right">
-          <div class="natalia">
-              <% if current_user %>
-                <a href= "/users/"><h2><%= current_user.points %> pts - <%= current_user.username %></h2></a>
-                <% end %>
-            </div>
+
+          <div class="social">
+            <ul>
+            <% if current_user %>
+              <li><a href= "/users/" class="nat"><h4 class=natalia><%= get_points %> pts - <%= current_user.username %></h4></a></li>
+              <% end %>
+            </ul>
+          </div>
+
           <div class="clearfix"> </div>
-        </div>
+        </div>        
         <div class="clearfix"> </div>
     </div>
-  </div>
+
   <% flash.each do |name, msg| %>
     <% if msg.is_a?(String) %>
       <div class="alert alert-<%= name == :notice ? "success" : "danger" %>">
@@ -106,7 +111,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <li>E-mail : <a href="mailto:hello@bbettr.com">hello@bbettr.com</a></li>
                 </ul>
               </div>
-              <div class="col-md-3 f-address f-phone">
+              <div class="col-md-2 f-address f-phone">
                 <h5>Phone</h5>
                 <div class="f-address-text">
                   <p>+1 888 569 6898</p>
@@ -114,11 +119,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
               </div>
               <div class="col-md-6 f-address f-contact">
-                <h5>Receive Deals</h5>
-                <form>
-                  <input type="text" placeholder="Email address" required="">
-                  <input type="submit" value="Submit">
-                </form>
+           <% if current_user %>
+           <h5>Buy Points</h5>
+                      <form action="/charge" method="POST">
+                   <script
+                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                     data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
+                     data-amount="2000"
+                     data-name="BBettr"
+                     data-description="Charge for your account."
+                     data-image="/images/2.png"
+                     data-locale="auto">
+                   </script>
+                 </form>
+            <% end %>
               </div>
               <div class="clearfix"> </div>
             </div>
@@ -127,9 +141,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <ul>
                   <li><a href="index.html" class="active">Home</a></li>
                   <li><a href="/games">Games</a></li>
-                  <li><a href="/bets">My Bets</a></li>
                   <li><a href="/leaderboard">Leaderboard</a></li>
+                  <% if current_user %>
+                  <li><a href="/bets">Bets</a></li>
                   <li><a href="/users/">Profile</a></li>
+                  <li><a href="/users/logout">Log Out</a></li>
+                  <% end %>
                 </ul>
               </div>
               <div class="copyright">
