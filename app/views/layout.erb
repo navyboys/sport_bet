@@ -69,7 +69,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           </div>
         </div>
         <div class="header-right">
-
           <form action="/charge" method="POST">
             <script
               src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -82,13 +81,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </script>
           </form>
 
-          <div class="social">
-            <ul>
-            <% if current_user %>
-              <li><a href= "/users/"><h2 class= "natalia"><%= get_points %> pts - <%= current_user.username %></h2></a></li>
-              <% end %>
-            </ul>
-          </div>
+          <div class="natalia">
+              <% if current_user %>
+                <a href= "/users/"><h2><%= get_points %> pts - <%= current_user.username %></h2></a>
+                <% end %>
+            </div>
           <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
@@ -141,7 +138,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
               <div class="footer-nav">
                 <ul>
                   <li><a href="index.html" class="active">Home</a></li>
-                  <li><a href="/">Home</a></li>
                   <li><a href="/games">Games</a></li>
                   <li><a href="/bets">My Bets</a></li>
                   <li><a href="/leaderboard">Leaderboard</a></li>

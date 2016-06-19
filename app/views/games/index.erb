@@ -1,6 +1,14 @@
-<div class="well">
-  <h3>Upcoming Games</h3>
+<div class="about-top">
+<div class="main-content">
+<div class="about-top">
+
+<div class="about-info">
+
+  <h2>Games</h2>
 </div>
+</div>
+<div class="about-team">
+<div class="main-content">
 <table class="table table-striped">
   <tr>
     <th>Date</th>
@@ -142,7 +150,7 @@
      <% @away_team_image = "was.gif" %>
    <% end %>
 
-    <tr>
+    <tr >
       <td><%= format_datetime(game[:game_date]) %></td>
       <td><img src="/images/<%= "#{@home_team_image}"%>"</td>
       <td>
@@ -199,3 +207,7 @@
     <% i += 1 %>
   <% end %>
 </table>
+</div>
+</div>
+</div>
+</div>
