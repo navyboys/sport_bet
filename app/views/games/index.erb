@@ -13,11 +13,14 @@
   <tr>
     <th>Date</th>
     <th></th>
+    <th></th>
     <th>Game</th>
+    <th></th>
     <th></th>
     <th></th>
     <th>Bets</th>
     <th>Pool</th>
+    <th>Status</th>
     <th></th>
   </tr>
   <% i = 0 %>
@@ -153,17 +156,30 @@
     <tr >
       <td><%= format_datetime(game[:game_date]) %></td>
       <td><img src="/images/<%= "#{@home_team_image}"%>"</td>
+      <td><%= game[:home_team_score]%></td>
       <td>
         <a href="games/<%= "#{@games_array[i].id}"%>">
-          <%= game[:home_team] %> vs <%= game[:away_team] %>
+           <%=game[:home_team] %> vs <%= game[:away_team] %>
         </a>
       </td>
+      <td><%= game[:away_team_score]%></td>
       <td><img src="/images/<%= "#{@away_team_image}"%>"/></td>
       <td><%= game[:stadium_name] %> &nbsp <%= game[:stadium_city] %></td>
       <td><%= @games_array[i].bets.count %></td>
       <td><%= @games_array[i].pool %></td>
-      <% @game = Game.find(@games_array[i].id.to_i) %>
 
+      <% @game = Game.find(@games_array[i].id.to_i) %>
+      <% case @game.status
+      when "InProgress"  %>
+      <% status = "In Progress" %>
+      <% when "Final" %>
+      <% status = "Final" %>
+      <% when "Scheduled" %>
+      <% status = "Scheduled" %>
+      <% when "Postponed" %>
+      <% status = "Postponed" %>
+      <% end %>
+      <td><%= status %></td>
       <td><%# unless current_user.bet?(@game) %>
         <% if can_bet?(@game) %>
           <div>
