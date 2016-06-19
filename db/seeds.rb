@@ -88,3 +88,7 @@ end
 
 #sample Game population
 # short.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
+
+# Game Status Update command:
+# Find the game_id of the game you want to force to "Final" (check the URL on the games page), then issue this in tux: (say the game has id = 10)
+# Game.find(10).update(status: "Final")
