@@ -14,6 +14,7 @@
           <th>Game</th>
           <th>Game Result</th>
           <th>Bet Points</th>
+          <th>Your Team</th>
           <th>Bet Result</th>
           <th>Action</th>
         </tr>
@@ -27,6 +28,7 @@
             </td>
             <td><%= show_game_result(bet.game) %></td>
             <td><%= bet.points %></td>
+            <td><%= bet.team.name %></td>
             <td><%= show_bet_result(bet) %></td>
             <td>
               <form action="/bets/<%= "#{bet.id}" %>" method="post">
@@ -39,7 +41,7 @@
       </table>
     </div>
   </div>
-  
+
 
   <div class="about-top">
 
