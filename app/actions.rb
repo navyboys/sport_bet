@@ -250,8 +250,17 @@ get '/customboard' do
   erb :'users/customboard'
 end
 
-# Page: update db with new seed data
 get '/admin' do
+  erb :'admin/index'
+
+end
+
+get '/admin/game_update' do
+  erb :'admin/game_update'
+  redirect '/admin'
+end
+# Page: update db with new seed data
+get '/admin/seed' do
   #Get API data
   def get_api_data(required_data, required_date = nil)
     if required_date
@@ -287,8 +296,10 @@ get '/admin' do
     Team.create(api_team_id: team["TeamID"], name: team["Name"])
   end
   #Get game data
-  @api_response_games_by_date_day_one = JSON.parse(get_api_data("GamesByDate","2016-JUN-18"))
-  @api_response_games_by_date_day_two = JSON.parse(get_api_data("GamesByDate","2016-JUN-19"))
+  @api_response_games_by_date_day_one = JSON.parse(get_api_data("GamesByDate","2016-JUN-19"))
+  @api_response_games_by_date_day_two = JSON.parse(get_api_data("GamesByDate","2016-JUN-20"))
+  file_var = File.open("sunday_games.json","w")
+  file_var.write(@api_response_games_by_date_day_one)
   #Populate games table
   @api_response_games_by_date_day_one.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
   @api_response_games_by_date_day_two.each { |game| Game.create(status: game["Status"], datetime: game["DateTime"], api_game_id: game["GameID"], api_stadium_id: game["StadiumID"]) }
@@ -312,6 +323,6 @@ get '/admin' do
   # #Update game_id in GameTeam
   GameTeam.all.each { |gt| gt.update(game_id: Game.find_by(api_game_id: gt.api_game_id).id) }
 
-  erb :'/admin/index'
+  erb :'/admin/seed_db'
 
 end

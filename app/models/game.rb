@@ -88,7 +88,7 @@ class Game < ActiveRecord::Base
   end
 
   def set_won_bets(bets)
-    binding.pry
+    # binding.pry
     winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}
     bets.each do |bet|          #sets bet's profit_points
       decimal_percentage = bet.points.to_f / winning_bet_pool.to_f #check math and decimal if time allows
