@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 
 #AddInitialUsers
-user_names = ["Richard", "Natalia", "Ben", "Max", "Matt", "Eamonn", "Vanessa", "Deepak", "Alexandra","Juliana", "Terrance"]
+user_names = ["Richard", "Natalia", "Ben", "Max", "Matt", "Eamonn", "Vanessa", "Deepak", "Alexandra", "Juliana", "Terrance"]
 bet_points = [1500, 1500, 1500, 150000000, 200, 300, 1, 500, 600, 0, 2000]
 
 email = "@sports_bet.com"
