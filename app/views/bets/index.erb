@@ -1,65 +1,85 @@
-<div class="well">
-  <h3>Completed Bets</h3>
-  <table class="table table-striped">
-    <tr>
-      <th>Date</th>
-      <th>Game</th>
-      <th>Game Result</th>
-      <th>Bet Points</th>
-      <th>Bet Result</th>
-      <th>Action</th>
-    </tr>
-    <% @completed_bets.each do |bet| %>
-      <tr>
-        <td><%= format_datetime(bet.game.datetime) %></td>
-        <td>
-          <a href="/games/<%= "#{bet.game.id}" %>">
-            <%= show_game(bet.game) %>
-          </a>
-        </td>
-        <td><%= show_game_result(bet.game) %></td>
-        <td><%= bet.points %></td>
-        <td><%= show_bet_result(bet) %></td>
-        <td>
-          <form action="/bets/<%= "#{bet.id}" %>" method="post">
-            <input type="hidden" name="_method" value="patch">
-            <input type="submit" value="Archive">
-          </form>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+<div class="main-content">
+  <div class="about-top">
 
-<div class="well">
-  <h3>Upcoming Bets</h3>
-  <table class="table table-striped">
-    <tr>
-      <th>Date</th>
-      <th>Game</th>
-      <th>Game Result</th>
-      <th>Your Team</th>
-      <th>Bet Points</th>
-      <th>Action</th>
-    </tr>
-    <% @upcoming_bets.each do |bet| %>
-      <tr>
-        <td><%= format_datetime(bet.game.datetime) %></td>
-        <td>
-          <a href="/games/<%= "#{bet.game.id}" %>">
-            <%= show_game(bet.game) %>
-          </a>
-        </td>
-        <td><%= show_game_result(bet.game) %></td>
-        <td><%= bet.team.name %></td>
-        <td><%= bet.points %></td>
-        <td>
-          <form action="/bets/<%= "#{bet.id}" %>" method="post">
-            <input type="hidden" name="_method" value="delete">
-            <input type="submit" value="Delete">
-          </form>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+    <div class="about-info">
+
+      <h2>Completed Bets</h2>
+    </div>
+  </div>
+  <div class="about-team">
+    <div class="main-content">
+      <table class="table table-striped">
+        <tr>
+          <th>Date</th>
+          <th>Game</th>
+          <th>Game Result</th>
+          <th>Bet Points</th>
+          <th>Bet Result</th>
+          <th>Action</th>
+        </tr>
+        <% @completed_bets.each do |bet| %>
+          <tr>
+            <td><%= format_datetime(bet.game.datetime) %></td>
+            <td>
+              <a href="/games/<%= "#{bet.game.id}" %>">
+                <%= show_game(bet.game) %>
+              </a>
+            </td>
+            <td><%= show_game_result(bet.game) %></td>
+            <td><%= bet.points %></td>
+            <td><%= show_bet_result(bet) %></td>
+            <td>
+              <form action="/bets/<%= "#{bet.id}" %>" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <input type="submit" value="Archive">
+              </form>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  
+
+  <div class="about-top">
+
+    <div class="about-info">
+
+      <h2>Upcoming Bets</h2>
+    </div>
+  </div>
+  <div class="about-team">
+    <div class="main-content">
+      <table class="table table-striped">
+        <tr>
+          <th>Date</th>
+          <th>Game</th>
+          <th>Game Result</th>
+          <th>Your Team</th>
+          <th>Bet Points</th>
+          <th>Action</th>
+        </tr>
+        <% @upcoming_bets.each do |bet| %>
+          <tr>
+            <td><%= format_datetime(bet.game.datetime) %></td>
+            <td>
+              <a href="/games/<%= "#{bet.game.id}" %>">
+                <%= show_game(bet.game) %>
+              </a>
+            </td>
+            <td><%= show_game_result(bet.game) %></td>
+            <td><%= bet.team.name %></td>
+            <td><%= bet.points %></td>
+            <td>
+              <form action="/bets/<%= "#{bet.id}" %>" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="Delete">
+              </form>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
 </div>
