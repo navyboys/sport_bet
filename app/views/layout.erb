@@ -67,20 +67,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="top-nav">
           <div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
             <a href="#"><img src="/../../images/menu.png" alt=""></a>
-          </div>  
+          </div>
         </div>
         <div class="header-right">
 
           <div class="social">
             <ul>
             <% if current_user %>
-              <li><a href= "/users/" class="nat"><h4 class=natalia><%= get_points %> pts - <%= current_user.username %></h4></a></li>
+              <li><a href= "/users/" class="nat"><h4 class=natalia><%= current_user.points %> pts - <%= current_user.username %></h4></a></li>
               <% end %>
             </ul>
           </div>
 
           <div class="clearfix"> </div>
-        </div>        
+        </div>
         <div class="clearfix"> </div>
     </div>
 

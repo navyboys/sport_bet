@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
   end
 
   def loser
-    game_teams.where(result: [-1, 0]).map { |gt| gt.team }.first
+    game_teams.where.not(id: winner.id).first
   end
 
   def pool

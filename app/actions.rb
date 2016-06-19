@@ -8,12 +8,14 @@ helpers do
   end
 
   def show_game(game)
-    "#{game.teams.first.name} vs #{game.teams.last.name}"
+    "#{game.winner.team.name} vs " +
+    "#{game.loser.team.name}"
   end
 
   def show_game_result(game)
-    if ['Final', 'InProgess'].include?(game.status)
-      "#{game.game_teams.first.score} : #{game.game_teams.last.score}"
+    if ['Final', 'InProgress'].include?(game.status)
+      "#{game.winner.score} : " +
+      "#{game.loser.score}"
     end
   end
 
@@ -252,7 +254,6 @@ end
 
 get '/admin' do
   erb :'admin/index'
-
 end
 
 get '/admin/game_update' do
