@@ -12,10 +12,6 @@ class Game < ActiveRecord::Base
     ['Final', 'Canceled'].include?(status)
   end
 
-  def can_bet?
-    ['Scheduled', 'InProgress'].include?(status)
-  end
-
   def winner
     game_team_a = game_teams.first
     game_team_b = game_teams.last
@@ -35,13 +31,13 @@ class Game < ActiveRecord::Base
   end
 
   def resolve_bets
-    return if completed?  # already did this book-keeping, don't redo it
 
     game_team_a = self.game_teams.first
     game_team_b = self.game_teams.last
 
     winning_team = nil
     losing_team = nil
+
     if game_team_a && game_team_b 
       if game_team_a.score > game_team_b.score
         winning_team = game_team_a
