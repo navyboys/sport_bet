@@ -41,20 +41,32 @@ class Game < ActiveRecord::Base
 
     winning_team = nil
     losing_team = nil
+    winscore = 0
+    losescore = 0
 
     if game_team_a && game_team_b
       if game_team_a.score > game_team_b.score
         winning_team = game_team_a
         losing_team =  game_team_b
-      elsif game_team_a.try.score < game_team_b.try.score
+        winscore = winning_team.score
+        losescore = losing_team.score
+      elsif game_team_a.score < game_team_b.score
         winning_team = game_team_b
-        winning_team = game_team_a
+        losing_team = game_team_a
+        winscore = winning_team.score
+        losescore = losing_team.score
       else
         winning_team = nil
       end
     end
 
     if winning_team
+
+      if game_team_a.team_id == winning_team.id
+        set_game_team_scores(game_team_a, game_team_b, winscore,losescore)
+      else
+        set_game_team_scores(game_team_b, game_team_a, winscore,losescore)
+      end
       winning_bets = self.bets.where(game_team_id: winning_team.id)
       set_won_bets(winning_bets)
       losing_bets = self.bets.where.not(game_team_id: winning_team.id)
@@ -65,7 +77,17 @@ class Game < ActiveRecord::Base
   end
 
   private
+  def set_game_team_scores(wonteam, loseteam, winscore,losescore)
+      wonteam.result = 1
+      wonteam.score = winscore
+      wonteam.save!
+      loseteam.result = -1
+      loseteam.score = losescore
+      loseteam.save!
+   end
+
   def set_won_bets(bets)
+    binding.pry
     winning_bet_pool = bets.reduce(0) {|m, bet| m + bet.points}
     bets.each do |bet|          #sets bet's profit_points
       decimal_percentage = bet.points.to_f / winning_bet_pool.to_f #check math and decimal if time allows
