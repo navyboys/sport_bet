@@ -17,8 +17,11 @@ class Game < ActiveRecord::Base
   end
 
   def winner
+    return unless game_teams.count > 1
     game_team_a = game_teams.first
     game_team_b = game_teams.last
+    game_team_a.score ||= 0
+    game_team_b.score ||= 0
     game_team_a.score > game_team_b.score ? game_team_a : game_team_b
   end
 
@@ -35,59 +38,29 @@ class Game < ActiveRecord::Base
   end
 
   def resolve_bets
-
-    game_team_a = self.game_teams.first
-    game_team_b = self.game_teams.last
-
-    winning_team = nil
-    losing_team = nil
-    winscore = 0
-    losescore = 0
-
-    if game_team_a && game_team_b
-      game_team_a.score ||= 0
-      game_team_b.score ||= 0
-
-      if game_team_a.score > game_team_b.score
-        winning_team = game_team_a
-        losing_team =  game_team_b
-        winscore = winning_team.score
-        losescore = losing_team.score
-      elsif game_team_a.score < game_team_b.score
-        winning_team = game_team_b
-        losing_team = game_team_a
-        winscore = winning_team.score
-        losescore = losing_team.score
-      else
-        winning_team = nil
-      end
-    end
-
-    if winning_team
-
-      if game_team_a.team_id == winning_team.id
-        set_game_team_scores(game_team_a, game_team_b, winscore,losescore)
-      else
-        set_game_team_scores(game_team_b, game_team_a, winscore,losescore)
-      end
-      winning_bets = self.bets.where(game_team_id: winning_team.id)
-      set_won_bets(winning_bets)
-      losing_bets = self.bets.where.not(game_team_id: winning_team.id)
-      set_lost_bets(losing_bets)
-    else
+    return unless winner && loser
+    if winner.score == loser.score
+      set_game_team_result(winner, loser, 'tied')
       set_tied_bets
+    else
+      set_game_team_result(winner, loser, 'not_tied')
+      winning_bets = self.bets.where(game_team: winner)
+      set_won_bets(winning_bets)
+      losing_bets = self.bets.where(game_team: loser)
+      set_lost_bets(losing_bets)
     end
   end
 
-  private
-
-  def set_game_team_scores(wonteam, loseteam, winscore,losescore)
+  def set_game_team_result(wonteam, loseteam, tied_or_not)
+    if tied_or_not == 'tied'
+      wonteam.result = 0
+      loseteam.result = 0
+    elsif tied_or_not == 'not_tied'
       wonteam.result = 1
-      wonteam.score = winscore
-      wonteam.save!
       loseteam.result = -1
-      loseteam.score = losescore
-      loseteam.save!
+    end
+    wonteam.save!
+    loseteam.save!
   end
 
   def set_won_bets(bets)
