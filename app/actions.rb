@@ -139,7 +139,7 @@ end
 
 # Charge with credit card
 post '/charge' do
-  Stripe.api_key = 'sk_test_yENZrfNUuVXFshfe9yOkatfu'
+  Stripe.api_key = ENV['STRIPE_API_KEY']
   StripeWrapper::Charge.create(
     card:        params[:stripeToken],
     amount:      2000,
