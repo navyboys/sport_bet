@@ -26,7 +26,7 @@ end
 #   end
 #   request = Net::HTTP::Get.new(uri.request_uri)
 #   # Request headers
-#   request['Ocp-Apim-Subscription-Key'] = '8c4c7e5288df4abf8b8830ca64d548a3'
+#   request['Ocp-Apim-Subscription-Key'] = 'Your API key here'
 #   # Request body
 #   request.body = "{body}"
 #
