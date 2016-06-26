@@ -17,7 +17,7 @@
                 <form action="/charge" method="POST">
                  <script
                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                   data-key="pk_test_OcwW2r1CJozGMqaj9g2qRHlB"
+                   data-key=<%= "#{ENV['STRIPE_PUBISHABLE_KEY']}" %>
                    data-amount="2000"
                    data-name="BBettr"
                    data-description="Donate for Charity."
@@ -34,4 +34,3 @@
         </div>
       </div>
     </div>
- 

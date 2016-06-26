@@ -206,7 +206,7 @@ get '/admin/seed' do
     end
     request = Net::HTTP::Get.new(uri.request_uri)
     # Request headers
-    request['Ocp-Apim-Subscription-Key'] = 'Your API key here'
+    request['Ocp-Apim-Subscription-Key'] = ENV['FANTASYDATA_MLB_PRIMARY_KEY']
     # Request body
     request.body = "{body}"
 
