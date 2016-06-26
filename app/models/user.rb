@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
   has_many :teams, through: :game_teams
 
   def bet_count
-    self.bets.count
+    bets.count
   end
 
   def bets_in_progress
-    self.game_teams.joins(:game).where("games.status IN ('Scheduled', 'InProgress')")
+    game_teams.joins(:game).where("games.status IN ('Scheduled', 'InProgress')")
   end
 
   def bet_count_in_progress
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def bets_completed
-    self.game_teams.joins(:game).where("games.status IN ('Final', 'Canceled')")
+    game_teams.joins(:game).where("games.status IN ('Final', 'Canceled')")
   end
 
   def bet_count_completed
