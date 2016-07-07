@@ -13,7 +13,7 @@ class Game < ActiveRecord::Base
   end
 
   def in_progress?
-   ['Scheduled', 'InProgress'].include?(status)
+    ['Scheduled', 'InProgress'].include?(status)
   end
 
   def winner
