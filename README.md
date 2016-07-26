@@ -1,6 +1,6 @@
 ## BBettr
 
-Mid-term project collaborated with @richardattfield, @maxahn and @natimj for [Lighthouse Labs](http://lighthouselabs.ca) Lighthouse Labs. Designed and developed within five days. Baseball fans can bet on MLB games with each other. Game data comes from real world via FantasyData API.
+Mid-term project collaborated with @richardattfield, @maxahn and @natimj for [Lighthouse Labs](http://lighthouselabs.ca). Designed and developed within five days. Baseball fans can bet on MLB games with each other. Game data comes from real world via FantasyData API.
 
 ### Features
 
